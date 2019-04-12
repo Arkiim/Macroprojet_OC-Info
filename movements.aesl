@@ -1,0 +1,95 @@
+<!DOCTYPE aesl-source>
+<network>
+
+
+<!--list of global events-->
+
+
+<!--list of constants-->
+
+
+<!--show keywords state-->
+<keywords flag="true"/>
+
+
+<!--node thymio-II-->
+<node nodeId="34294" name="thymio-II">var a = 1000 # valeur pour timer où thymio va tout droit
+var b = 2300 # valeur pour timer où thymio tourne
+var mf = 150 # vitesse lorsque le thymio avance (Moove Forward)
+var mt = 200 # vitesse lorsque le thymio tourne (Moove Turn)
+var turn = 0 # variable "flag" pour pouvoir avancer après un virage
+var c[] = [1,2,0	]
+var moove = 0
+var tin  # var définissant quand le test des inputs s'arrête( Test INputs)
+
+onevent buttons
+#*
+if  c[0] != 0 then
+ moove = 1 # Si col1 (col de avancer) contient qqchose va avancer ( doit attendre de appuyer sur go donc just flag	
+end
+if  moove == 1 then # fonction go
+	avance elseif droite elseif gauche 
+end 
+_____
+Partie test *# 
+#Input de télécommande flèche haut c[i] = 1, flèche droite c[i]=2, flèche gauche c[i]=3
+while z == 1 do 
+	if c[i]= 1 then # si cell du tableau d'inputs est 1,2 ou 3 avance ou tourne
+		avance
+	elseif 	c[i]= 2
+		right
+	elseif c[i]= 3 then
+		left
+	i+
+	end
+end	
+_____
+#Partie mouvement
+
+if button.forward == 1 # fait avancer le thymio d'une case
+then
+	timer.period[0]= a
+	motor.left.target = mf
+	motor.right.target = mf
+end
+
+
+if  button.right == 1 # fait tourner le thymio a gauche
+then 
+	timer.period[0] = b
+	motor.left.target = mt
+	motor.right.target = 0
+	turn = 1	
+end
+
+if  button.left == 1 # fait tourner le thymio a gauche
+then  
+	timer.period[0] = b
+	motor.left.target = 0
+	motor.right.target = mt
+	turn = 1
+end
+
+onevent timer0
+	if turn == 0   # si le flag pour tourner est nul, il arrête le mouvement sinon met un autre timer pour avancer d'une case 
+	then
+		motor.left.target = 0
+		motor.right.target = 0
+		timer.period[0] = 0
+	elseif turn ==1 # S'il a tourné, avance d'une case
+	then	 	
+		timer.period[1]= a
+		motor.left.target = mf
+		motor.right.target = mf
+	end
+	
+onevent timer1 #arrête timer1
+
+	motor.left.target = 0
+	motor.right.target = 0
+	turn = 0
+	timer.period[1] = 0
+	</node>
+
+
+</network>
