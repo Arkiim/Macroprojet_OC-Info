@@ -13,7 +13,7 @@
 
 
 <!--node thymio-II-->
-<node nodeId="34294" name="thymio-II">var a = 1000 # valeur pour timer où thymio va tout droit
+<node nodeId="34294" name="thymio-II">var a = 1000 # valeur pour timer où thymio avance
 var b = 2300 # valeur pour timer où thymio tourne
 var mf = 150 # vitesse lorsque le thymio avance (Moove Forward)
 var mt = 200 # vitesse lorsque le thymio tourne (Moove Turn)
@@ -32,7 +32,7 @@ end
 _____
 Partie test *#
 #Input de télécommande flèche haut c[i] = 1, flèche droite c[i]=2, flèche gauche c[i]=3
-tin=1
+tin=0
 while tin == 1 do 
 	if c[i]== 1 
 	then  # si cell du tableau d'inputs est 1,2 ou 3 avance ou tourne
