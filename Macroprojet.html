@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Macroprojet</title>
+	<style type="text/css">
+		body    {
+      		margin:0;
+      		padding:0;
+      		font-family:"Arial";
+      	}
+      	.header	h1, .header h2{
+      		margin: 0.7em 0.4em 0 0.4em;
+      		text-align: center;
+      		font-size: 1.6em;
+      		margin-block-end:0px;
+      	}
+      	.header {
+      		margin: 3px 1.5em 0 1.5em;
+      		display: flex;
+      		justify-content: space-between;
+      		/*background-image: linear-gradient(90deg, , crimson);*/
+      		background-image: radial-gradient(at 50% 0, hsl(230, 100%, 66%) 20%, red, transparent 75%);
+      		background-size: 100% 17px;
+      		background-repeat: no-repeat;
+      		padding: 5px 0;
+      		border:solid;
+      		border-bottom: none;
+      		border-image: linear-gradient(to left, teal, crimson);
+        	border-image-slice: 1;
+        	border-width: 2px;
+      	}
+      	.lin-grad-bottom{
+      		background-image: radial-gradient(at 50% 100%,  hsl(230, 100%, 66%) 35%, red,  transparent 80%);
+      		background-size: 100% 17px;
+      		height: 0.8em;
+      		margin: 0.1em 1.5em;
+      		border: solid;
+      		border-image: linear-gradient(to left, crimson, teal);
+        	   border-image-slice: 1;
+        	   border-width: 2px;
+      		border-top: none; 
+      	}
+     	.header h1 {
+      		/*border:1px outset teal;
+      		box-shadow: 7px 7px 7px teal;*/
+      	}
+      	.header	h2{
+      		/*box-shadow: -7px 7px 7px crimson;
+      		border: 1px outset crimson;*/
+      	}
+      	hr {
+      		position:relative;
+      		top:10px;
+      		display: block;
+      		width:100%;
+      		border: 1px outset grey;
+      	}
+      	.footer{
+      		margin:0;
+      		padding:0;
+      		background-color: lightgrey;height: 100px;
+      	}
+      	.footer hr{
+      		position: initial;
+      		border: 2px inset grey;
+
+      	}
+      	.content {
+      		width: auto;
+      		height:400px;
+      		margin: 30px;
+      		box-shadow: 5px 5px 25px black;
+      	}	
+
+      </style>
+   </head>
+   <body>
+<!-- en tête -->
+   
+   	<header class="header"> 
+   		<h1>OC Info - MacroProjet : Thymio</h1>
+   		<h2>Arsène Fragnières - Noah Munz</h2>
+   	</header><div class="lin-grad-bottom"></div>
+   	<hr/>
+ <!-- contenu-->
+   	<section class="content">
+   		
+   		
+   	</section>
+   	<!--  bas de page -->
+   	
+   	<footer class="footer">
+   		<hr/>
+   	 <!-- test footer avec des éléments -->
+   	 	<ol>
+   	 		<li>GG</li>
+   	 		<li>gg</li>
+   	 		<li>gg</li>
+   	 	</ol>
+   	</footer>
+   </body>
+</html>
