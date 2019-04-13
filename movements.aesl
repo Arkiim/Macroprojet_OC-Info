@@ -18,33 +18,36 @@ var b = 2300 # valeur pour timer où thymio tourne
 var mf = 150 # vitesse lorsque le thymio avance (Moove Forward)
 var mt = 200 # vitesse lorsque le thymio tourne (Moove Turn)
 var turn = 0 # variable "flag" pour pouvoir avancer après un virage
-var c[] = [2,0,1	]
-var moove = 0
+var c[5] = [1,2,1,0,0]
 var TI  # var définissant quand le test des inputs s'arrête(Test Inputs)
-var i = 0 # var définissant un élément du tableau C
+var i # var définissant un élément du tableau C
 
 #*____________
 Partie test *#
 #Input de télécommande flèche haut c[i] = 1, flèche droite c[i]=2, flèche gauche c[i]=3
+i = 0
 TI = 1
-while TI == 1 do 
-	if c[i]== 1 
-	then  # si cell du tableau d'inputs est 1,2 ou 3: avance ou tourne
-		callsub moove 
-		i++
-	elseif 	c[i]== 2 
+ while c[i]!= 0 do
+	  # si cell du tableau d'inputs est 1,2 ou 3: avance ou tourne; + termine chaque "chemin" avec 0 pour finir et fermer le tableau
+	if c[i] == 1
 	then
+		callsub moove
+		i+= 1
+	elseif 	c[i] == 2 
+	then
+	
 		callsub tright
-		i++
-	elseif c[i]== 3 
+		i+= 1
+	elseif c[i] == 3
 	then
 		callsub tleft
-		i++
+		i+= 1
 	end
-	
-end 
+	i++
+ end
 
- # problème le thymio ne s'arrête pas et ne passe pas à la prochaine condition, pourquoi ? Quand il tourne, il ne fait que tourner il n'avance pas comme prévu => (hypothèse) timer ne s'arrête pas ? Pourquoi ?
+
+ #le thymio n'execute que la dernière commande pourquoi ?
 
 #_____
 #Partie Timers
