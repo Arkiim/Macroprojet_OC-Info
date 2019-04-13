@@ -20,22 +20,16 @@ var mt = 200 # vitesse lorsque le thymio tourne (Moove Turn)
 var turn = 0 # variable "flag" pour pouvoir avancer après un virage
 var c[] = [2,2,0	]
 var moove = 0
-var tin  # var définissant quand le test des inputs s'arrête(Test INputs)
+var TI  # var définissant quand le test des inputs s'arrête(Test Inputs)
 var i = 0 # var définissant un élément du tableau C
-#*
-if  c[0] != 0 then
- moove = 1 # Si col1 (col de avancer) contient qqchose va avancer ( doit attendre de appuyer sur go donc just flag	
-end
-if  moove == 1 then # fonction go
-	avance elseif droite elseif gauche 
-end 
-_____
+
+#*____________
 Partie test *#
 #Input de télécommande flèche haut c[i] = 1, flèche droite c[i]=2, flèche gauche c[i]=3
-tin=0
-while tin == 1 do 
+TI = 0
+while TI == 1 do 
 	if c[i]== 1 
-	then  # si cell du tableau d'inputs est 1,2 ou 3 avance ou tourne
+	then  # si cell du tableau d'inputs est 1,2 ou 3: avance ou tourne
 		callsub moove 
 	elseif 	c[i]== 2 
 	then
@@ -49,41 +43,10 @@ end
 
  # problème le thymio ne s'arrête pas et ne passe pas à la prochaine condition, pourquoi ? Quand il tourne, il ne fait que tourner il n'avance pas comme prévu => (hypothèse) timer ne s'arrête pas ? Pourquoi ?
 
-#*_____
-Partie mouvement*#
-
-sub moove # fait avancer le thymio d'une case
-	timer.period[0]= a
-	motor.left.target = mf
-	motor.right.target = mf
-		
-onevent button.forward
-callsub moove
-
-
-sub tright # fait tourner le thymio a droite puis "active" turn
-	timer.period[0] = b
-	motor.left.target = mt
-	motor.right.target = 0
-	turn = 1	
-
-onevent button.right
-callsub tright
-
-
-sub tleft # fait tourner le thymio a gauche
-
-	timer.period[0] = b
-	motor.left.target = 0
-	motor.right.target = mt
-	turn = 1
-	
-onevent button.left
-callsub tleft
-
-
+#_____
+#Partie Timers
 onevent timer0
-	if turn == 1  # si le flag pour tourner (turn) est nul , il arrête le mouvement 			sinon active le 2nd timer, pour avancer d'une case 
+	if turn == 1  # si le flag pour tourner (turn) est nul , il arrête le mouvement sinon active le 2nd timer, pour avancer d'une case 
 	then
 		timer.period[1]= a
 		motor.left.target = mf
@@ -100,7 +63,38 @@ onevent timer1 #arrête timer1
 	timer.period[1] = 0
 	motor.left.target = 0
 	motor.right.target = 0
-	turn = 0</node>
+	turn = 0
+
+#Partie mouvement
+
+onevent button.forward
+callsub moove
+
+onevent button.right
+callsub tright
+
+onevent button.left
+callsub tleft
+
+#Partie fonctions
+sub moove # fait avancer le thymio d'une case
+	timer.period[0]= a
+	motor.left.target = mf
+	motor.right.target = mf
+
+sub tright # fait tourner le thymio a droite puis "active" turn
+	timer.period[0] = b
+	motor.left.target = mt
+	motor.right.target = 0
+	turn = 1	
+
+sub tleft # fait tourner le thymio a gauche
+	timer.period[0] = b
+	motor.left.target = 0
+	motor.right.target = mt
+	turn = 1
+	
+</node>
 
 
 </network>
