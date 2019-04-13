@@ -18,7 +18,7 @@ var b = 2300 # valeur pour timer où thymio tourne
 var mf = 150 # vitesse lorsque le thymio avance (Moove Forward)
 var mt = 200 # vitesse lorsque le thymio tourne (Moove Turn)
 var turn = 0 # variable "flag" pour pouvoir avancer après un virage
-var c[] = [2,2,0	]
+var c[] = [2,0,1	]
 var moove = 0
 var TI  # var définissant quand le test des inputs s'arrête(Test Inputs)
 var i = 0 # var définissant un élément du tableau C
@@ -26,19 +26,22 @@ var i = 0 # var définissant un élément du tableau C
 #*____________
 Partie test *#
 #Input de télécommande flèche haut c[i] = 1, flèche droite c[i]=2, flèche gauche c[i]=3
-TI = 0
+TI = 1
 while TI == 1 do 
 	if c[i]== 1 
 	then  # si cell du tableau d'inputs est 1,2 ou 3: avance ou tourne
 		callsub moove 
+		i++
 	elseif 	c[i]== 2 
 	then
 		callsub tright
+		i++
 	elseif c[i]== 3 
 	then
 		callsub tleft
-	i++
+		i++
 	end
+	
 end 
 
  # problème le thymio ne s'arrête pas et ne passe pas à la prochaine condition, pourquoi ? Quand il tourne, il ne fait que tourner il n'avance pas comme prévu => (hypothèse) timer ne s'arrête pas ? Pourquoi ?
@@ -46,21 +49,22 @@ end
 #_____
 #Partie Timers
 onevent timer0
-	if turn == 1  # si le flag pour tourner (turn) est nul , il arrête le mouvement sinon active le 2nd timer, pour avancer d'une case 
+	if turn == 0  # si le flag pour tourner (turn) est nul , il arrête le mouvement sinon active le 2nd timer, pour avancer d'une case 
+	then
+		timer.period[0] = 0
+		motor.left.target = 0
+		motor.right.target = 0	 
+	elseif turn == 1 # S'il a tourné, avance d'une case
 	then
 		timer.period[1]= a
 		motor.left.target = mf
 		motor.right.target = mf
 		turn = 0
-	elseif turn ==0 # S'il a tourné, avance d'une case
-	then
-		timer.period[0] = 0
-		motor.left.target = 0
-		motor.right.target = 0	 		
 	end
 	
-onevent timer1 #arrête timer1
+onevent timer1 #arrête timer0 et timer1
 	timer.period[1] = 0
+	timer.period[0] = 0
 	motor.left.target = 0
 	motor.right.target = 0
 	turn = 0
@@ -87,7 +91,8 @@ sub tright # fait tourner le thymio a droite puis "active" turn
 	motor.left.target = mt
 	motor.right.target = 0
 	turn = 1	
-
+	
+	
 sub tleft # fait tourner le thymio a gauche
 	timer.period[0] = b
 	motor.left.target = 0
