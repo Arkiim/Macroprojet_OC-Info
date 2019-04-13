@@ -18,7 +18,7 @@ var b = 2300 # valeur pour timer où thymio tourne
 var mf = 150 # vitesse lorsque le thymio avance (Moove Forward)
 var mt = 200 # vitesse lorsque le thymio tourne (Moove Turn)
 var turn = 0 # variable "flag" pour pouvoir avancer après un virage
-var c[] = [1,1,1,1,1,0]
+var c[] = [1,2,2,3,0]
 var TI  # var définissant quand le test des inputs s'arrête(Test Inputs)
 var i # var définissant un élément du tableau C
 
@@ -32,7 +32,6 @@ TI = 0
 	if c[i] == 1
 	then
 		callsub moove
-
 		i+= 1
 		
 	elseif c[i] == 2 
