@@ -18,7 +18,7 @@ var b = 2300 # valeur pour timer où thymio tourne
 var mf = 150 # vitesse lorsque le thymio avance (Moove Forward)
 var mt = 200 # vitesse lorsque le thymio tourne (Moove Turn)
 var turn = 0 # variable "flag" pour pouvoir avancer après un virage
-var c[5] = [1,2,1,0,0]
+var c[] = [1,1,1,1,1,0]
 var TI  # var définissant quand le test des inputs s'arrête(Test Inputs)
 var i # var définissant un élément du tableau C
 
@@ -26,28 +26,28 @@ var i # var définissant un élément du tableau C
 Partie test *#
 #Input de télécommande flèche haut c[i] = 1, flèche droite c[i]=2, flèche gauche c[i]=3
 i = 0
-TI = 1
+TI = 0
  while c[i]!= 0 do
 	  # si cell du tableau d'inputs est 1,2 ou 3: avance ou tourne; + termine chaque "chemin" avec 0 pour finir et fermer le tableau
 	if c[i] == 1
 	then
 		callsub moove
+
 		i+= 1
-	elseif 	c[i] == 2 
+		
+	elseif c[i] == 2 
 	then
-	
 		callsub tright
 		i+= 1
 	elseif c[i] == 3
 	then
 		callsub tleft
-		i+= 1
+		i+=1
 	end
-	i++
  end
 
 
- #le thymio n'execute que la dernière commande pourquoi ?
+ #le thymio n'execute que la dernière commande pourquoi ? Il check bien toutes les conditions le s'incrémente correctement mais les fonctions ne sont pas appelées
 
 #_____
 #Partie Timers
