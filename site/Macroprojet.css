@@ -71,8 +71,7 @@ hr {
 }
 
 .navbar a, .navbar span, #button{
-      padding: 7% 0;
-      padding-left: 14%; 
+      padding: 7% 24%;
       text-decoration: none;
       font-size: 28px;
       color: white;
