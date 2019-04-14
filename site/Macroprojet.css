@@ -8,37 +8,34 @@ body {
       text-align: center;
       font-size: 1.6em;
 }
-
 .header {
       margin: 3px 1.5em 0 1.5em;
-      display: flex;
-      justify-content: space-between;
-      background-image: radial-gradient(at 50% 0, hsl(230, 100%, 66%) 20%, red, transparent 75%);
-      background-size: 100% 17px;
-      background-repeat: no-repeat;
+      display: flex; /* aligne les 2 titres */
+      justify-content: space-between; /* espace les 2 titres */
+      background-image: radial-gradient(at 50% 0, hsl(230, 100%, 66%) 20%, red, transparent 75%); /*ajoute en haut du titre un radial gradient en tant qu'image de fond*/
+      background-size: 100% 17px; /* étend l'image sur toute la largeur pour améliorer l'effet d'englobement des titres */
+      background-repeat: no-repeat; /*empêche l'image de fond de se répéter pour n'apparaitre qu'en haut */
       padding: 5px 0;
-      border:solid;
-      border-bottom: none;
+      border:solid; /* défini le type de la bordure pour pouvoir y appliquer une border-image*/
+      border-bottom: none; /*enlève la bordure du bas pour pouvoir coller avec la bordure du div qui sert de support au radial gradient du bas */
       border-image: linear-gradient(to left, teal, crimson);
-      border-image-slice: 1;
+      border-image-slice: 1; /*découpe l'image de la bordure en 1 seule partie*/
       border-width: 2px;
 
 }
 .rad-grad-bottom {
-      background-image: radial-gradient(at 50% 100%,  hsl(230, 100%, 66%) 35%, red,  transparent 80%);
+      background-image: radial-gradient(at 50% 100%,  hsl(230, 100%, 66%) 35%, red,  transparent 80%); /* ajoute un radial gradient en bas des 2 titres, pour les englober, avec le gradient du haut*/
       background-size: 100% 17px;
-      height: 0.8em;
+      height: 0.8em; /*empêche le gradient du bas de trop monter et cacher les titres*/
       margin: 0 1.5em;
       border: solid;
       border-image: linear-gradient(to left, crimson, teal);
       border-image-slice: 1;
       border-width: 2px;
-      border-top: none; 
+      border-top: none; /* enlève la bordure du haut pour pouvoir coller avec la bordure du "header" et donner l'impression d'avoir une seule bordure */
 }
 hr {
-      margin: 15px 0;
-      border: 1px outset hsl(0, 0%, 95%);
-      margin-bottom: 0;
+      border: 1px outset hsl(0, 0%, 95%); /* cbange la couleur de la barre en lui ajoutant une bordure */
 }
 .footer {
       margin:0;
@@ -47,77 +44,69 @@ hr {
       height: 100px;
 }
 .footer hr {
-      position: initial;
       border: 1px inset hsl(0, 0%, 95%);
-      margin: 0;
+      margin: 0; /* permet de coller les 2 hr*/
 }
 .content {
-      width: auto;
+      width: auto; /* définit le rectangle qui va contenir toute l'information*/
       height:400px;
       margin: 30px;
       margin-top: 10px;
       box-shadow: 1px 1px 10px black;
 }
 .navbar {
-      height: 100%;
-      width: 0;
+      height: 100%; /* définit la barre de navigation sur la gauche */
+      width: 0; /* largeur intial de 0 pour qu'on ne la voit que lorsqu'on appelle la fonction "show()"*/
       position: fixed;
-      z-index: 1;
-      top: 0;
+      z-index: 1; /* apparait par dessus le reste */
+      top: 0; /* est collé au haut de la page */
       background-color: black;
-      overflow-x: hidden;
+      overflow-x: hidden; /* cache tout texte qui dépasse de la zone noire */
       padding-top: 60px;
-      transition: 0.6s;
+      transition: 0.6s; /* rajoute une "animation" en ralentissant la barre navigation pour qu'elle s'affiche en 0.6seconde */
 }
 
 .navbar a, .navbar span, #button{
-      padding: 7% 24%;
-      text-decoration: none;
+      padding: 7% 24%; /* stylise les éléments dans la barre de navigation */
+      text-decoration: none; /* enlève la mise en forme classique des liens (soulignements etc...)*/
       font-size: 28px;
       color: white;
-      display: block;
-      transition: 0.3s;
-      border:none;
-      background-color: inherit;
-      cursor: pointer;
+      display: block; /* fait en sorte que chaque lien prenne toute la largeur de la ligne et se mette l'un au dessus de l'autre*/ 
+      transition: 0.3s; /* ralentit l'effet du "a:hover" pour qu'il prenne 0.3second*/
+      cursor: pointer; /* change le type de curseur lorsque l'on "hover" les liens*/
       top: 0;
 }
 .navbar a{
       border-bottom: 1px solid hsl(0, 0%, 18%);
 }
 .navbar span{
-      position: absolute;
-      right: 8%;
+      position: absolute; /* permet de mettre la croix en haut en ignorant le padding-top de 60px*/
+      right: 8%;  /*décale la croix*/
       padding: 12px 20px;
-      text-align: center; 
 }
 .navbar a:hover, .navbar span:hover {
-      background-color: hsl(0, 0%, 8%);
+      background-color: hsl(0, 0%, 8%); /*change la couleur de fond lorsque le curseur se déplace sur l'élément*/
 }
 .active {
-      background-color: hsl(0, 0%, 12%) !important;
+      background-color: hsl(0, 0%, 12%) !important; /* change la couleur de "l'onglet", du lien de la page où l'utilisateur se trouve, peu importe de si son curseur est sur le lien ou non*/
 }
 .flexnav {
-      width: 100%;
-      display: flex;  /* met l'icone de la barre de navigation et l'élément hr sur la même ligne*/
+      display: flex;  /* met l'icone de la barre de navigation, le bouton, et l'élément hr sur la même ligne*/
 } 
 #button{
       color: black;
       padding: 5px 10px;
       margin: 5px;
-      width:auto;
       font-size: 35px;
-      background-color: white;
-      flex: 0.8;
+      flex: 0.8; /* réduit la largeur du bouton à 0.8 fois la largeur de base du div contenant les hr */
 }
 .linenav{
-      flex: 32;
+      flex: 32; /* augmente la largeur du div contenant les hr à 32 fois la largeur de base du bouton */
       margin: auto 3px;
       margin-right: 40px;
 }
 .linenav hr{
-      margin-top: 0;    
+      margin-top: 0; /* rapproche les lignes des 2 hr en enlevant les espaces entre les 2 */
+      margin-bottom: 0;    
 }
-#second {
-      margin-bottom: 0;
-}
+
