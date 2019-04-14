@@ -1,5 +1,5 @@
 function show() {
-  document.getElementById("switch").style.width = "33.33%";
+  document.getElementById("switch").style.width = "28%";
   document.body.style.backgroundColor = "hsl(0, 0%, 12%)";
   document.getElementById("invisible").style.visibility = "hidden";
 }
