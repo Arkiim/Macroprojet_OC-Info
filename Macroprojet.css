@@ -1,0 +1,123 @@
+body {
+      margin: 0;
+      padding: 0;
+      font-family: "Arial";
+}
+.header h1, .header h2 {
+      margin: 0.7em 0.4em 0 0.4em;
+      text-align: center;
+      font-size: 1.6em;
+}
+
+.header {
+      margin: 3px 1.5em 0 1.5em;
+      display: flex;
+      justify-content: space-between;
+      background-image: radial-gradient(at 50% 0, hsl(230, 100%, 66%) 20%, red, transparent 75%);
+      background-size: 100% 17px;
+      background-repeat: no-repeat;
+      padding: 5px 0;
+      border:solid;
+      border-bottom: none;
+      border-image: linear-gradient(to left, teal, crimson);
+      border-image-slice: 1;
+      border-width: 2px;
+
+}
+.rad-grad-bottom {
+      background-image: radial-gradient(at 50% 100%,  hsl(230, 100%, 66%) 35%, red,  transparent 80%);
+      background-size: 100% 17px;
+      height: 0.8em;
+      margin: 0 1.5em;
+      border: solid;
+      border-image: linear-gradient(to left, crimson, teal);
+      border-image-slice: 1;
+      border-width: 2px;
+      border-top: none; 
+}
+hr {
+      margin: 15px 0;
+      border: 1px outset hsl(0, 0%, 95%);
+      margin-bottom: 0;
+}
+.footer {
+      margin:0;
+      padding:0;
+      background-color: hsl(0, 0%, 90%);
+      height: 100px;
+}
+.footer hr {
+      position: initial;
+      border: 1px inset hsl(0, 0%, 95%);
+      margin: 0;
+}
+.content {
+      width: auto;
+      height:400px;
+      margin: 30px;
+      margin-top: 10px;
+      box-shadow: 1px 1px 10px black;
+}
+.navbar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      background-color: black;
+      overflow-x: hidden;
+      padding-top: 60px;
+}
+
+.navbar a, .navbar span, #button{
+      padding: 7% 0;
+      padding-left: 14%; 
+      text-decoration: none;
+      font-size: 28px;
+      color: white;
+      display: block;
+      transition: 0.3s;
+      border:none;
+      background-color: inherit;
+      cursor: pointer;
+      top: 0;
+}
+.navbar a{
+      border-bottom: 1px solid hsl(0, 0%, 18%);
+}
+.navbar span{
+      position: absolute;
+      right: 8%;
+      padding: 12px 20px;
+      text-align: center; 
+}
+.navbar a:hover, .navbar span:hover {
+      background-color: hsl(0, 0%, 8%);
+}
+.active {
+      background-color: hsl(0, 0%, 12%) !important;
+}
+.flexnav {
+      width: 100%;
+      display: flex;  /* met l'icone de la barre de navigation et l'élément hr sur la même ligne*/
+} 
+#button{
+      color: black;
+      padding: 5px 10px;
+      margin: 5px;
+      width:auto;
+      font-size: 35px;
+      background-color: white;
+      flex: 0.8;
+}
+.linenav{
+      flex: 32;
+      margin: auto 3px;
+      margin-right: 40px;
+}
+.linenav hr{
+      margin-top: 0;    
+}
+#second {
+      margin-bottom: 0;
+}
