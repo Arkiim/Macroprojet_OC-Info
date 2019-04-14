@@ -67,6 +67,7 @@ hr {
       background-color: black;
       overflow-x: hidden;
       padding-top: 60px;
+      transition: 0.6s;
 }
 
 .navbar a, .navbar span, #button{
