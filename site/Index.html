@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Macroprojet</title>
+	<title> Plan - Macroprojet-NM/AF</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="./Macroprojet.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,400i,500,500i,600,700,800,900|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 	<script src="Macroprojet.js"></script>
 </head>
 <body>
 	<!-- barre de navigation de côté -->
-
+	<div id="foo"> <!-- pour que la background color du footer reste peu importe la taille du navigateur, sa couleur a été mise sur tout le body et c'est ce div qui permet de garder le reste de la page avec un background-color blanc. (le selecteur est une id pour être atteignable par javascript plus tard) -->
 	<div id="switch" class="navbar"> <!-- div sur lequel la barre de navigation va être formaté et rendre affichable ou non par javascript -->
-	  <span onclick="hide()">X</span> <!-- fait office de bouton -->
-	  <a class="active" href="#">Title 1</a>
-	  <a href="#">Title 2</a>
-	  <a href="#">Title 3</a>
-	  <a href="#">Title 4</a>
-	  <a href="#">Title 5</a>
+	  <span id="Button" onclick="hide()">X</span> <!-- fait office de bouton -->
+	  <a class="active" href="./index.html">Plan</a>
+	  <a href="./Problématique.html">Problématique</a>
+	  <a href="#">Partie 1</a>
+	  <a href="#">Partie 2</a>
+	  <a href="#">Partie 3</a>
+	  <a href="#">Conclusion</a>
 	</div>
 	<div id="invisible"><!-- englobe toute la page pour pouvoir la cibler et la cacher avec la fonction "show()" -->
 	
@@ -35,13 +37,21 @@
 
 	<!-- contenu-->
 	<section class="content"> <!-- élément qui va contenir toute l'information -->
-		
+		<h1>Plan :</h1>
+		<ol class="plan">
+			<li><a href="./index.html">Plan</a></li>
+			<li><a href="./Problématique.html">Explication du projet</a></li>
+			<li><a href="#">Partie 1 : Programmer le mouvement</a></li>
+			<li><a href="#">Partie 2 : Programmer la télécommande</a></li>
+			<li><a href="#">Partie 3 : Programmer le module d'urgence</a></li>
+			<li><a href="#">Conclusion</a></li>
+		</ol>
 		
 	</section>
 
 	<!--  bas de page -->
 	<footer class="footer">
 		<hr/><hr/>
-	</footer></div>
+	</footer></div></div>
 </body>
 </html>

@@ -1,8 +1,16 @@
 body {
       margin: 0;
       padding: 0;
-      font-family: "Arial";
+      font-family: "Montserrat", "Helvetica";
+      transition:0.4s; /* ajoute une "animation" lorsque le body "disparait pour laisser place à la barre de navigation*/
+      background-color: hsl(0, 0%, 90%); /* couleur du footer comme expliqué dans index.html */
 }
+#foo {
+      background-color: white; /* permet de rendre le reste du site blanc au lieu de la couleur du footer */
+}
+
+/* Partie Headers */
+
 .header h1, .header h2 {
       margin: 0.7em 0.4em 0 0.4em;
       text-align: center;
@@ -41,19 +49,17 @@ hr {
       margin:0;
       padding:0;
       background-color: hsl(0, 0%, 90%);
-      height: 100px;
+      height: 120px;
 }
 .footer hr {
       border: 1px inset hsl(0, 0%, 95%);
       margin: 0; /* permet de coller les 2 hr*/
 }
-.content {
-      width: auto; /* définit le rectangle qui va contenir toute l'information*/
-      height:400px;
-      margin: 30px;
-      margin-top: 10px;
-      box-shadow: 1px 1px 10px black;
-}
+
+/* Fin Partie Header */
+
+/* Navbar */
+
 .navbar {
       height: 100%; /* définit la barre de navigation sur la gauche */
       width: 0; /* largeur intial de 0 pour qu'on ne la voit que lorsqu'on appelle la fonction "show()"*/
@@ -86,6 +92,7 @@ hr {
 }
 .navbar a:hover, .navbar span:hover {
       background-color: hsl(0, 0%, 8%); /*change la couleur de fond lorsque le curseur se déplace sur l'élément*/
+      color: white;
 }
 .active {
       background-color: hsl(0, 0%, 12%) !important; /* change la couleur de "l'onglet", du lien de la page où l'utilisateur se trouve, peu importe de si son curseur est sur le lien ou non*/
@@ -99,6 +106,7 @@ hr {
       margin: 5px;
       font-size: 35px;
       flex: 0.8; /* réduit la largeur du bouton à 0.8 fois la largeur de base du div contenant les hr */
+      transition: 0.6s;
 }
 .linenav{
       flex: 32; /* augmente la largeur du div contenant les hr à 32 fois la largeur de base du bouton */
@@ -109,4 +117,41 @@ hr {
       margin-top: 0; /* rapproche les lignes des 2 hr en enlevant les espaces entre les 2 */
       margin-bottom: 0;    
 }
+/* Fin Partie Navbar */
 
+/* Partie Content */
+h1, h2, h3 {
+      font-family: "Open Sans", "Arial";
+}
+.content {
+      width: auto; /* définit le rectangle qui va contenir toute l'information*/
+      height:auto;
+      margin: 30px;
+      margin-top: 10px;
+      box-shadow: 1px 1px 10px black;
+      padding: 20px 30px;
+}
+.content h1, .content h2 { /*stylise tous les titres h1 et h2 à l'intérieur de la section qui a comme classe "content" */
+      font-weight: 300;
+      margin:0 0 15px 0;
+      font-size: 30px;
+}
+.content h1 {
+      font-size: 35px;
+}
+.content p {
+      margin: 0 15px;
+      font-size: 18px;
+}
+a {
+      text-decoration: none;
+      color: #8040bf;
+}
+a:hover{
+      color: hsl(270, 50%, 20%);
+}
+ .plan li {
+      margin: 13px 25px;
+ }
+
+/* Fin Partie Content */
