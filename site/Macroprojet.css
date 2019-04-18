@@ -205,7 +205,6 @@ text{ /* text "départ" et "sortie" */
 }
 .answer { /* svg avec l'ensemble des flèches*/
       margin-top: 40px;
-      width: 33%;
       height: 220px;
       border-left: 2px solid black;
       border-right: 2px solid black;
