@@ -4,7 +4,7 @@
 	<title> Problématique - Macroprojet-NM/AF</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="./Macroprojet.css">
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,400i,500,500i,600,700,800,900|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,400i,400,400i,600,700,800,900|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 	<script src="Macroprojet.js"></script>
 </head>
 <body onload="init()">
@@ -38,12 +38,38 @@
 	<section class="content">
 		<h2>Expliquation du projet :</h2>
 		<p>Le but de notre projet est de réaliser un labyrinthe que thymio et son utilisateur devront s'essayer à résoudre.<br> Cependant, étant donné que le concept du labyrinhte a déjà été réalisé de nombreuse fois, celui-ci diffère de quelques aspects d'un labyrinthe classique.</p>
-		<p>Dans un premier temps, le thymio est contrôlé par télécommande qui utilise un protocole de transmission infrarouge RC5. Deuxièmement, le labyrinthe sera quadrillé et sous forme de case et chaque touche directionnelle de la télécommande fera avancer le thymio d'une case dans la directione choisie.</p>
-		<p>Par exemple pour ce labyrinthe là :</p>
-		<svg width="500" height="500">
-			<path d="M0 0 L250 0 L250 250 L0 250 Z" stroke="black" fill="none">
-		</svg>
+		<p>Dans un premier temps, le thymio est contrôlé par une télécommande utilisant un protocole de transmission infrarouge RC5. Deuxièmement, le labyrinthe sera quadrillé et sous forme de case. Chaque touche directionnelle de la télécommande, fera donc avancer le thymio d'une case dans la direction choisie.</p>
+		<p>Par exemple pour un labyrinthe  de ce type :</p>
+		<div class="center-svg"> <!-- div créé pour center le svg et l'aligner avec le paragraphe et le 2nd svg-->
+			<svg class="lab"> <!-- svg du labyrinthe -->
+				<path class="wall" d="M60 0 L300 0 L300 300 L60 300 M0 300 L0 0"/>
+				<path class="quadrillage" d="M0 60 L300 60  M0 120 L300 120  M0 180 L300 180  M0 240 L300 240  M60 0 L60 300  M120 0 L120 300  M180 0 L180 300  M240 0 L240 300"/>
+				<path class="wall" d="M60 240 L60 180 L0 180 L180 180 L180 120 L0 120  M180 300 L180 240 L120 240  M240 240 L240 120 L300 120  M300 60 L240 60 L240 0  M180 0 L180 60 L120 60 L120 0  M60 60 L60 0"/>
+				<text x="0" y="315">Départ !</text>
+				<text x="0" y="13">Sortie !</text>
+			</svg>
+			<p> La combinaison de touches à entrer sur la télécommande, sera :</p>
+			<svg class="answer"> <!-- SVG de la réponse sous forme de flèches --> 
+				<path stroke="black" fill="none" d="
+				M50 50 L50 0 L35 25 M50 0 L65 25 
+				M80 25 L130 25 L110 12.5 M130 25 L110 37.5  
+				M150 25 L200 25 M150 25 L170 12.5 M 150 25 L170 37.5
+				M220 25 L270 25 L250 12.5 M270 25 L250 37.5
+				
+				M50 130 L50 70 L35 95 M50 70 L65 95
+				M80 95 L130 95 M80 95 L100 82.5 M80 95 L100 107.5
+				M170 130 L170 70 L155 95 M170 70 L185 95
+				M230 130 L230 70 L215 95 M230 70 L245 95
 
+				M20 165 L70 165 M20 165 L40 152.5 M20 165 L40 177.5
+				M110 195 L110 145 L95 165 M110 145 L125 165
+				M170 195 L170 145 L155 165 M170 145 L185 165
+				M210 165 L260 165 L240 152.5 M260 165 L240 177.5
+				"/>
+			</svg>
+		</div>
+		<p> Toutes les entrées, et donc l'intégralité du parcour, devront être saisies avant l'entrée du labyrinthe. Dans le cas de l'exemple donné : il faudra entrer les touches mentionnées ci-dessus avant de commencer le mouvement.</p>
+		<p>Dans un dernier temps, le projet comporte une dernière particularité. En effet, le thymio est équipé d'un "module de crise" qui lui permettra, s'il est bloqué et ne peut plus avancer ou, si l'utilisateur s'est trompé de chemin, de reprogrammer sa route vers la sortie et de continuer comme si de rien n'était.</p> 
 	</section>
 
 	<!--  bas de page -->

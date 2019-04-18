@@ -7,7 +7,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,400i,500,500i,600,700,800,900|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 	<script src="Macroprojet.js"></script>
 </head>
-<body>
+<body onload="init()" >
 	<!-- barre de navigation de côté -->
 	<div id="foo"> <!-- pour que la background color du footer reste peu importe la taille du navigateur, sa couleur a été mise sur tout le body et c'est ce div qui permet de garder le reste de la page avec un background-color blanc. (le selecteur est une id pour être atteignable par javascript plus tard) -->
 	<div id="switch" class="Navbar"> <!-- div sur lequel la barre de navigation va être formaté et rendre affichable ou non par javascript -->
@@ -28,7 +28,7 @@
 	</header>
 	<div class="rad-grad-bottom"></div> <!-- sert de support au radial gradient, et à la bordure, du bas-->	
 
-	<div id="navbar" class="flexnav"> <!--sert a flex hr et l'icone de la barre-->
+	<div id="icon" class="flexnav"> <!--sert a flex hr et l'icone de la barre-->
 		<span id="button" onclick="show()">&#9776;</span> <!-- icone de la barre de navigation -->
 		<div class="linenav"> <!-- div qui permet de mettre les hr l'un au dessus de l'autre -->
 			<hr id="second"/><hr/>
@@ -46,10 +46,8 @@
 			<li><a href="#">Partie 3 : Programmer le module d'urgence</a></li>
 			<li><a href="#">Conclusion</a></li>
 		</ol>
-		
 	</section>
 
-	<!--  bas de page -->
 	<footer class="footer">
 		<hr/><hr/>
 	</footer></div></div>

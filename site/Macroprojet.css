@@ -170,8 +170,49 @@ a {
 a:hover{
       color: hsl(270, 80%, 30%); /* change les liens en violet foncé lorsque l'on a le curseur dessus */
 }
- .plan li {
+.plan li {
       margin: 13px 25px;
  }
+ /* Partie SVG */
+.center-svg { 
+      width: 75%; /* définit une largeur et une hauteur pour centrer le div avec margin: 0 auto;  */
+      height: 310px;
+      margin: 20px auto;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+}
+.lab{
+      width: 310px; /* stylise le labyrinthe svg */
+      height: 320px;
+}
+.wall{ 
+      stroke:black; /* défnit les murs (noirs) sur le quadrillage (Gris)*/
+      stroke-width:2px; /* augmente la largeur du contour du svg à 2px*/
+      fill: none;
+}
+.quadrillage {
+      stroke: grey;
+}
+.center-svg p {
+      width: 14%;
+      margin: 20px 40px 20px 30px;
+}
+text{ /* text "départ" et "sortie" */
+      stroke: red;
+      stroke-width: 1px;
+      text-decoration: underline;
+}
+.answer { /* svg avec l'ensemble des flèches*/
+      margin-top: 40px;
+      width: 33%;
+      height: 220px;
+      border-left: 2px solid black;
+      border-right: 2px solid black;
+}
+.answer path{
+      margin-top: 20px;
+}
+/*Fin Partie SVG*/
 
 /* Fin Partie Content */
