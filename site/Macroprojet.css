@@ -3,7 +3,7 @@ body {
       padding: 0;
       font-family: "Montserrat", "Helvetica";
       transition:0.4s; /* ajoute une "animation" lorsque le body "disparait pour laisser place à la barre de navigation*/
-      background-color: hsl(0, 0%, 90%); /* couleur du footer comme expliqué dans index.html */
+      background-color: hsl(0, 0%, 90%); /* couleur (gris clair) du footer comme expliqué dans index.html */
 }
 #foo {
       background-color: white; /* permet de rendre le reste du site blanc au lieu de la couleur du footer */
@@ -43,7 +43,7 @@ body {
       border-top: none; /* enlève la bordure du haut pour pouvoir coller avec la bordure du "header" et donner l'impression d'avoir une seule bordure */
 }
 hr {
-      border: 1px outset hsl(0, 0%, 95%); /* cbange la couleur de la barre en lui ajoutant une bordure */
+      border: 1px outset hsl(0, 0%, 95%); /* change la couleur de la barre en lui ajoutant une bordure */
 }
 .footer {
       margin:0;
@@ -58,9 +58,9 @@ hr {
 
 /* Fin Partie Header */
 
-/* Navbar */
+/* Navbars */
 
-.navbar {
+.Navbar {
       height: 100%; /* définit la barre de navigation sur la gauche */
       width: 0; /* largeur intial de 0 pour qu'on ne la voit que lorsqu'on appelle la fonction "show()"*/
       position: fixed;
@@ -72,8 +72,9 @@ hr {
       transition: 0.6s; /* rajoute une "animation" en ralentissant la barre navigation pour qu'elle s'affiche en 0.6seconde */
 }
 
-.navbar a, .navbar span, #button{
-      padding: 7% 24%; /* stylise les éléments dans la barre de navigation */
+.Navbar a, .Navbar span, #button{
+      padding: 7% 20%; /* stylise les éléments dans la barre de navigation */
+      padding-right: 10%;
       text-decoration: none; /* enlève la mise en forme classique des liens (soulignements etc...)*/
       font-size: 28px;
       color: white;
@@ -82,15 +83,15 @@ hr {
       cursor: pointer; /* change le type de curseur lorsque l'on "hover" les liens*/
       top: 0;
 }
-.navbar a{
-      border-bottom: 1px solid hsl(0, 0%, 18%);
+.Navbar a{
+      border-bottom: 1px solid hsl(0, 0%, 18%); /* ajoute une séparation grise foncée entre les parties */
 }
-.navbar span{
+.Navbar span{
       position: absolute; /* permet de mettre la croix en haut en ignorant le padding-top de 60px*/
       right: 8%;  /*décale la croix*/
       padding: 12px 20px;
 }
-.navbar a:hover, .navbar span:hover {
+.Navbar a:hover, .Navbar span:hover {
       background-color: hsl(0, 0%, 8%); /*change la couleur de fond lorsque le curseur se déplace sur l'élément*/
       color: white;
 }
@@ -99,6 +100,12 @@ hr {
 }
 .flexnav {
       display: flex;  /* met l'icone de la barre de navigation, le bouton, et l'élément hr sur la même ligne*/
+}
+#icon {
+      overflow: hidden;
+      padding: 0;
+      background-color: white;
+      width: 99%; /* ajoute un espace à droite entre le bord de la fenêtre et la bordure */
 } 
 #button{
       color: black;
@@ -112,12 +119,22 @@ hr {
       flex: 32; /* augmente la largeur du div contenant les hr à 32 fois la largeur de base du bouton */
       margin: auto 3px;
       margin-right: 40px;
+      overflow: visible;
 }
 .linenav hr{
       margin-top: 0; /* rapproche les lignes des 2 hr en enlevant les espaces entre les 2 */
       margin-bottom: 0;    
 }
-/* Fin Partie Navbar */
+.sticky { /* classe qui sera mise par javascript quand l'utilisateur scroll pour garder l'icone du menu en haut de la page */
+      position: fixed;
+      top: 0;
+      width: 100%;
+}
+
+.sticky + .content { /* ajout d'un espace pour que l'icone du menu cache le moins de texte possible */
+      margin-top: 102px;
+}
+/* Fin Partie Navbars */
 
 /* Partie Content */
 h1, h2, h3 {
@@ -126,29 +143,32 @@ h1, h2, h3 {
 .content {
       width: auto; /* définit le rectangle qui va contenir toute l'information*/
       height:auto;
-      margin: 30px;
-      margin-top: 10px;
+      margin: 30px; /* décale le texte des bords de l'élément */
+      margin-top: 10px; /* rapproche le texte du haut en mettant 10px de margin à la place de 30 */
       box-shadow: 1px 1px 10px black;
       padding: 20px 30px;
 }
 .content h1, .content h2 { /*stylise tous les titres h1 et h2 à l'intérieur de la section qui a comme classe "content" */
       font-weight: 300;
-      margin:0 0 15px 0;
+      margin:0;
+      margin-bottom: 15px;
       font-size: 30px;
 }
 .content h1 {
       font-size: 35px;
 }
 .content p {
-      margin: 0 15px;
+      margin: 0 10px; /*décale les paragraphes par rapport aux titres */
       font-size: 18px;
+      text-align: justify; 
+      padding: 10px 5px; /*ajoute de l'espace entre les paragraphes */
 }
 a {
       text-decoration: none;
-      color: #8040bf;
+      color: hsl(270, 50%, 50%); /* liens en violet clair */
 }
 a:hover{
-      color: hsl(270, 50%, 20%);
+      color: hsl(270, 80%, 30%); /* change les liens en violet foncé lorsque l'on a le curseur dessus */
 }
  .plan li {
       margin: 13px 25px;

@@ -10,13 +10,13 @@
 <body>
 	<!-- barre de navigation de côté -->
 	<div id="foo"> <!-- pour que la background color du footer reste peu importe la taille du navigateur, sa couleur a été mise sur tout le body et c'est ce div qui permet de garder le reste de la page avec un background-color blanc. (le selecteur est une id pour être atteignable par javascript plus tard) -->
-	<div id="switch" class="navbar"> <!-- div sur lequel la barre de navigation va être formaté et rendre affichable ou non par javascript -->
+	<div id="switch" class="Navbar"> <!-- div sur lequel la barre de navigation va être formaté et rendre affichable ou non par javascript -->
 	  <span id="Button" onclick="hide()">X</span> <!-- fait office de bouton -->
 	  <a class="active" href="./index.html">Plan</a>
 	  <a href="./Problématique.html">Problématique</a>
-	  <a href="#">Partie 1</a>
-	  <a href="#">Partie 2</a>
-	  <a href="#">Partie 3</a>
+	  <a href="#">Le mouvement</a>
+	  <a href="#">Télécommande IR</a>
+	  <a href="#">Module de crise</a>
 	  <a href="#">Conclusion</a>
 	</div>
 	<div id="invisible"><!-- englobe toute la page pour pouvoir la cibler et la cacher avec la fonction "show()" -->
@@ -28,7 +28,7 @@
 	</header>
 	<div class="rad-grad-bottom"></div> <!-- sert de support au radial gradient, et à la bordure, du bas-->	
 
-	<div class="flexnav"> <!--sert a flex hr et l'icone de la barre-->
+	<div id="navbar" class="flexnav"> <!--sert a flex hr et l'icone de la barre-->
 		<span id="button" onclick="show()">&#9776;</span> <!-- icone de la barre de navigation -->
 		<div class="linenav"> <!-- div qui permet de mettre les hr l'un au dessus de l'autre -->
 			<hr id="second"/><hr/>

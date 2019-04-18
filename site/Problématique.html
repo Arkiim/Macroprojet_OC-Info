@@ -7,10 +7,10 @@
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,400i,500,500i,600,700,800,900|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 	<script src="Macroprojet.js"></script>
 </head>
-<body>
+<body onload="init()">
 
 	<!-- barre de navigation de côté -->
-	<div id="foo"><div id="switch" class="navbar"> 
+	<div id="foo"><div id="switch" class="Navbar"> 
 	  <span id="Button" onclick="hide()">X</span>
 	  <a href="./index.html">Plan</a>
 	  <a class="active" href="./Problématique.html">Problématique</a>
@@ -27,7 +27,7 @@
 		<h2>Arsène Fragnières - Noah Munz</h2>
 	</header>
 	<div class="rad-grad-bottom"></div>
-	<div class="flexnav"> 
+	<div id="icon" class="flexnav"> 
 		<span id="button" onclick="show()">&#9776;</span>
 		<div class="linenav">
 			<hr id="second"/><hr/>
@@ -37,6 +37,13 @@
 	<!-- contenu-->
 	<section class="content">
 		<h2>Expliquation du projet :</h2>
+		<p>Le but de notre projet est de réaliser un labyrinthe que thymio et son utilisateur devront s'essayer à résoudre.<br> Cependant, étant donné que le concept du labyrinhte a déjà été réalisé de nombreuse fois, celui-ci diffère de quelques aspects d'un labyrinthe classique.</p>
+		<p>Dans un premier temps, le thymio est contrôlé par télécommande qui utilise un protocole de transmission infrarouge RC5. Deuxièmement, le labyrinthe sera quadrillé et sous forme de case et chaque touche directionnelle de la télécommande fera avancer le thymio d'une case dans la directione choisie.</p>
+		<p>Par exemple pour ce labyrinthe là :</p>
+		<svg width="500" height="500">
+			<path d="M0 0 L250 0 L250 250 L0 250 Z" stroke="black" fill="none">
+		</svg>
+
 	</section>
 
 	<!--  bas de page -->
