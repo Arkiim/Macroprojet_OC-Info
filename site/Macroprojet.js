@@ -19,21 +19,25 @@ function hide() {
 	document.getElementById("foo").style.backgroundColor = "white"; //retabli la couleur du reste du site
 	document.getElementById("invisible").style.visibility = "visible"; // rend le site (tout sauf le menu) de nouveau visible
 }
-function init() { // fonction init pour exéctuer le script suivant dès le chargement du body
-	window.onscroll = function() {Scroll()}; // lorsque l'utilisateur scroll appelle la fonction "Scroll()"
 
+function init() { // fonction init pour exéctuer le script suivant dès le chargement du body
 	var sticky = icon.offsetTop // définit la variable sticky  qui est le nom de la classe qui permettra que l'icone qui ouvre le menu reste tout le temps en haut de la page
-	function Scroll() { // dès que la page dépasse un certain point, le programme ajoute la classe "sticky" à l'élément avec l'id "icon" et rajoute une bordure, autrement il enlève les 2.
-	  if (window.pageYOffset > sticky) {
-	    icon.classList.add("sticky");
-	    document.getElementById("icon").style.border = "solid"; // ajoute une bordure avec linear gradient puis l'enlève si la condition n'est pas remplie
-	    document.getElementById("icon").style.borderImage = " linear-gradient(to left, hsl(195, 53%, 55%), hsl(0, 0%, 20%), hsl(0, 0%, 25%), hsl(0, 0%, 30%), crimson)";
-	    document.getElementById("icon").style.borderImageSlice = "3";
-	    document.getElementById("icon").style.borderWidth = "1.5px";
-	    document.getElementById("icon").style.margin = "0 0 0 0.3%"; // ajoute un espzce entre le bord de la page pour pas que la bordure soit collé au bord de la fenêtre */
-	  } else {
-	    icon.classList.remove("sticky");
-	    document.getElementById("icon").style.border = "none";
-	  }
+	window.onscroll = // lorsque l'utilisateur scroll appelle la fonction "Scroll()"
+	function() {
+		Scroll();
+	}; 
+
+	function Scroll() { 
+		if (window.pageYOffset > sticky) {
+			icon.classList.add("sticky");// dès que la page dépasse un certain point, le programme ajoute la classe "sticky" à l'élément avec l'id "icon" et rajoute une bordure, sinon il enlève les 2.
+		    document.getElementById("icon").style.border = "solid"; // ajoute une bordure avec linear gradient puis l'enlève si la condition n'est pas remplie
+		    document.getElementById("icon").style.borderImage = " linear-gradient(to left, hsl(195, 53%, 55%), hsl(0, 0%, 20%), hsl(0, 0%, 25%), hsl(0, 0%, 30%), crimson)";
+		    document.getElementById("icon").style.borderImageSlice = "3";
+		    document.getElementById("icon").style.borderWidth = "1.5px";
+		    document.getElementById("icon").style.margin = "0 0 0 0.3%"; // ajoute un espzce entre le bord de la page pour pas que la bordure soit collé au bord de la fenêtre */
+		} else {
+			icon.classList.remove("sticky");
+	    	document.getElementById("icon").style.border = "none";
+	    }
 	}
 }
