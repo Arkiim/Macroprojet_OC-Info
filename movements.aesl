@@ -13,93 +13,94 @@
 
 
 <!--node thymio-II-->
-<node nodeId="34294" name="thymio-II">var a = 1000 # valeur pour timer où thymio avance
-var b = 2300 # valeur pour timer où thymio tourne
+<node nodeId="34294" name="thymio-II">#Partie Variables
+
+var a = 1000 # valeur pour timer principal qui sert de boucle et aussi définit pendant combien de temps thymio avance ou recule
+
+var t = 2300 # valeur pour timer où thymio tourne
+
+var w = 100 # valeur pour timer permettant de faire attendre entre plusieurs instructions consécutives
+
 var mf = 150 # vitesse lorsque le thymio avance (Moove Forward)
+
 var mt = 200 # vitesse lorsque le thymio tourne (Moove Turn)
+
 var turn = 0 # variable "flag" pour pouvoir avancer après un virage
-var c[] = [3,2,1,3,0]
-var TI  # var définissant quand le test des inputs s'arrête(Test Inputs)
-var i # var définissant un élément du tableau C
+
+var c[] = [4,4,3,1,1,0] #tableau d'instruction de mouvement. Tout droit: c[i] = 1, droite: c[i]=2,  gauche: c[i]=3, reculer c[i] = 4.
+
+var i # var définissant la position de l'i-ème élément du tableau C
+
+var Mode = 0 #Variable définissant le "mode d'interprétation" du code pour thymio. Si Mode = 0 Thymio lira les valeurs et si Mode = 1 Thymio initiera les timers pour s'occuper du mouvement. avec entre les 2 des temps d'arrêt pour laisser le temps a Thymio de bouger avant de lire la prochaine valeur du tableau.
 
 #*____________
-Partie test *#
-
-#Input de télécommande flèche haut c[i] = 1, flèche droite c[i]=2, flèche gauche c[i]=3
+Partie Timers *#
 i = 0
-TI = 0
- while c[i]!= 0 do
-	  # si cell du tableau d'inputs est 1,2 ou 3: avance ou tourne; + termine chaque "chemin" avec 0 pour finir et fermer le tableau
-	if c[i] == 1
-	then
-		callsub moove
-		i++
-	elseif c[i] == 2 
-	then
-		callsub tright
-		i++
-	elseif c[i] == 3
-	then
-		callsub tleft
-		i++
-	end
- end
+timer.period[0] = a #Démarre directement la boucle "endless" qui tournera tournera tout le temps répétant le test "sur quel mode est Thymio?" , ceci sera remplacer plus tard par la commande "Centre" de la telecommande * 
 
- #le thymio n'execute que la dernière commande pourquoi ? Il check bien toutes les conditions le s'incrémente correctement mais les fonctions ne sont pas appelées
+onevent timer0
+
+	if Mode == 1 then #Thymio bouge
+
+		if turn == 0  # si le flag pour tourner (turn) est nul , il arrête le mouvement sinon active le 2nd timer, pour avancer d'une case 
+		then
+			timer.period[0] = 0
+			timer.period[1] = w # timer servant à faire attendre le programme pour qu'il n'exécute pas tout de suite le "if Mode == 0" et n'exécute pas tout en même temps )
+			motor.left.target = 0
+			motor.right.target = 0
+			i++ #incrémente de 1, pour la prochaine "itération" du timer0
+		
+		elseif turn == 1 # S'il a tourné, avance d'une case
+		then
+			timer.period[0] = 0
+			timer.period[1]= a
+			motor.left.target = mf
+			motor.right.target = mf
+		end
+	end
+#*____________
+Partie test valeurs tableau *#
 
 #*_____
 Partie mouvement*#
 
-onevent button.forward
-callsub moove
+onevent timer1 #arrête timer0 et timer1 et remet le Mode = 0
 
-onevent button.right
-callsub tright
+	timer.period[1] = 0
+	timer.period[0] = a # Redemarre la boucle
+	motor.left.target = 0
+	motor.right.target = 0
+	turn = 0
+	Mode = 0
 
-onevent button.left
-callsub tleft
+#*____________
+Partie mouvement*#
 
-#Partie fonctions
 sub moove # fait avancer le thymio d'une case
 	timer.period[0]= a
 	motor.left.target = mf
 	motor.right.target = mf
+	turn = 0
 
 sub tright # fait tourner le thymio a droite puis "active" turn
-	timer.period[0] = b
+	timer.period[0] = t
 	motor.left.target = mt
 	motor.right.target = 0
 	turn = 1	
 	
 	
 sub tleft # fait tourner le thymio a gauche
-	timer.period[0] = b
+	timer.period[0] = t
 	motor.left.target = 0
 	motor.right.target = mt
 	turn = 1
 	
-#Partie Timers
-onevent timer0
-	if turn == 0  # si le flag pour tourner (turn) est nul , il arrête le mouvement sinon active le 2nd timer, pour avancer d'une case 
-	then
-		timer.period[0] = 0
-		motor.left.target = 0
-		motor.right.target = 0	 
-	elseif turn == 1 # S'il a tourné, avance d'une case
-	then
-		timer.period[0] = 0
-		timer.period[1]= a
-		motor.left.target = mf
-		motor.right.target = mf
-		turn = 0
-	end
-	
-onevent timer1 #arrête timer0 et timer1
-	timer.period[1] = 0
-	timer.period[0] = 0
-	motor.left.target = 0
-	motor.right.target = 0
-	turn = 0
+sub back #fait reculer le thymio
+	timer.period[0] = a
+	motor.left.target = -mt
+	motor.right.target = -mt
+	turn = 0		
+
 </node>
 
 
