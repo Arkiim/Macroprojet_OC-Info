@@ -60,9 +60,40 @@ onevent timer0
 	end
 #*____________
 Partie test valeurs tableau *#
-
-#*_____
-Partie mouvement*#
+	
+	if Mode == 0 #Thymio lit les valeurs (il est en deuxième pour éviter que il saute des valeurs lorsque il reprend la boucle)
+	then
+	
+		if c[i] == 1 
+		then
+			callsub moove #fonction mettant la periode de Timer0 a 1 seconde et faisant avancer Thymio pendant toute la période de Timer0 
+			
+			Mode = 1 #change de mode, ce qui enclenche la 1ère itération des timers. (qui elle s'occupe de la partie mouvement  avec "if Mode=1"). Ils arrêtent le mouvement et avec timer1 (plus bas) marquent un temps d'arrêt, reprennent la boucle et remettent le Mode à 0 
+			
+		# Impossible de mettre i++ car conflit
+		
+		elseif c[i] == 2 
+		then
+			callsub tright #idem pour moove mais a droite 
+			Mode = 1
+			i++
+		
+		elseif c[i] == 3
+		then
+			callsub tleft #idem a gauche
+			Mode = 1 
+			i++ 
+		
+		elseif c[i] == 4 #idem derrière
+		then
+			callsub back
+			Mode = 1
+			
+		else
+			return # si la i-ième case du tableau contient autre chose que 1,2,3 ou 4 arrête d'incrémenter, sort de la "boucle" et arrête le test
+		end	
+	
+	end
 
 onevent timer1 #arrête timer0 et timer1 et remet le Mode = 0
 
@@ -73,7 +104,7 @@ onevent timer1 #arrête timer0 et timer1 et remet le Mode = 0
 	turn = 0
 	Mode = 0
 
-#*____________
+#*_____
 Partie mouvement*#
 
 sub moove # fait avancer le thymio d'une case
