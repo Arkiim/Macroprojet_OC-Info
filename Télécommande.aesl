@@ -12,4 +12,44 @@
 <keywords flag="true"/>
 
 
+<!--node thymio-II-->
+<node nodeId="34294" name="thymio-II">var c[] = [0,0,0,5]
+var rc
+var n = 0
+
+onevent rc5
+
+#Partie "création" (met les valeurs dans le tableau)
+
+while c[n] != 5 
+do
+	rc = rc5.command
+	
+	if rc == 80 
+	then
+		c[n] = 1
+	
+	elseif rc == 86 
+	then
+		c[n] = 2
+	
+	elseif rc == 85					
+	then
+		c[n] = 3
+		
+	elseif rc == 81 
+	then
+		c[n] = 4
+	else
+		return
+	end
+	
+	if rc5.command != rc # compare l'ancienne valeur de rc5 commande avec la nouvelle pour empêcher le while de continuer la prochaine étape, tant que l'utilisateur n'as pas appuyé sur une autre touche de la télécommande
+	then
+		n++	
+	end
+	
+end</node>
+
+
 </network>

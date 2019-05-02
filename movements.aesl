@@ -27,54 +27,87 @@ var mt = 200 # vitesse lorsque le thymio tourne (Moove Turn)
 
 var turn = 0 # variable "flag" pour pouvoir avancer après un virage
 
-var c[] = [1,4,0] #tableau d'instruction de mouvement. Tout droit: c[i] = 1, droite: c[i]=2,  gauche: c[i]=3, reculer c[i] = 4.
+var c[] = [0,0,0,0,0,0,0,0,0,0,0,0] #tableau d'instruction de mouvement. Tout droit: c[i] = 1, droite: c[i]=2,  gauche: c[i]=3, reculer c[i] = 4.
 
-var i # var définissant la position de l'i-ème élément du tableau C
+var i = 0 # var définissant la position de l'i-ème élément du tableau C
 
-var Mode = 0 #Variable définissant le "mode d'interprétation" du code pour thymio. Si Mode = 0 Thymio lira les valeurs et si Mode = 1 Thymio initiera les timers pour s'occuper du mouvement. avec entre les 2 des temps d'arrêt pour laisser le temps a Thymio de bouger avant de lire la prochaine valeur du tableau.
+var n = 0 # var (utilisé lors de la création du tableau, 2 vars différentes pour éviter les conflit avec i) définissant la position de l'n-ème élément du tableau C
 
-var nul = 0
-var x = 0
+var rc # var permettant de stocker la valeur de "rc5.command" pour pouvoir la comparer plus tard
 
-var j = (i + 1) # var permettant d'arrêter timer0 une fois arrivé a la dernière valeur du tableau(avant le 0)
+var Mode = 10 #Variable définissant le "mode d'interprétation" du code pour thymio. Si Mode = 0 Thymio lira les valeurs et si Mode = 1 Thymio initiera les timers pour s'occuper du mouvement. avec entre les 2 des temps d'arrêt pour laisser le temps a Thymio de bouger avant de lire la prochaine valeur du tableau.
 
-i = 0
+timer.period[0] = 50
+
 #*____________
-Partie test telecommande *#  
+Partie telecommande *#  
 onevent rc5
 
-if rc5.command==53 #then
-	
-	#if nul == 0 
-	then
-	Mode = 0
-	timer.period[0] = a
-	rc5.command = 0
-	
-	#*elseif nul == 1
-	then
-	call leds.top(32, 12, 20)
-	timer.period[0] = a
-	rc5.command = 0
-	end*#
-end
-#*timer0 
-onevent timer0 
+#Partie "création" (met les valeurs des flèches entrées dans le tableau) Dans la déclaration "if Mode == 10" du onevent timer0 plus bas
 
-if  rc5 command = fleches  then
-	c[i]= fleche appuyé
+
+#Partie "GO/STOP" (Faire bouger avec les boutons)
+
+if rc5.command == 53 #boutton go
+then
+		Mode = 0 #met mode qui prépare à lire le tableau
+		timer.period[0] = a #enclenche la boucle grâce au 1er timer
+		rc5.command = 0
 end
-i++*#
+
+if rc5.command == 87 #boutton "stop"
+then
+	Mode = 2	# met le mode prévu pour les dernières entrées ou arrêts
+	rc5.command = 0
+end
+
 #*____________
-Partie Timers *#
-
-#timer.period[0] = a #Démarre directement la boucle "endless" qui tournera tournera tout le temps répétant le test "sur quel mode est Thymio?" , ceci sera remplacer plus tard par la commande "Centre" de la telecommande * 
+Partie Principale Timers *#
 
 onevent timer0
 
-	if Mode == 1 then #Thymio bouge
-
-		if turn == 0  # si le flag pour tourner (turn) est nul , il arrête le mouvement sinon active le 2nd timer, pour avancer d'une case 
+	if Mode == 10 # (Partie création du tableau) Mode où les valeurs rc5 des entrées sur la télécommande sont mises dans le tableau c[]
+	then
+		rc = rc5.command #stock la valeur de la touche entrée pour pouvoir la comparer après
+		rc5.command = 0 #remet à 0 pour que le code marche si on veut appuier deux fois sur la même touche
+		
+		if rc == 80 
+		then
+			c[n] = 1
+		
+		elseif rc == 86 
+		then
+			c[n] = 2
+	
+		elseif rc == 85					
+		then
+			c[n] = 3
+		
+		elseif rc == 81 
+		then
+			c[n] = 4
+		
+		elseif rc == 0 # si jamais il y a un problème qui necessite de remettre des valeurs à 0
+		then
+			c[n] = 0	
+			
+		elseif rc == 5 #5 pour fermer le tableau. Chaque combinaison de directions devra toujours être terminé par un 5 pour clore le tableau et empêcher toute modification involontaire
+		then
+			c[n] = 5
+			timer.period[0] = 0
+			return
+	end
+	
+	if rc5.command != rc 
+	# compare l'ancienne valeur de rc5 commande avec la nouvelle pour empêcher le while d'incrémenter n et de continuer la prochaine étape, tant que l'utilisateur n'as pas appuyé sur une autre touche de la télécommande.$
+	then
+		n++	
+	end	
+				
+	elseif Mode == 1 #Thymio bouge
+	then	
+	
+		if turn == 0  # si le flag pour tourner (turn) est nul , il arrête le mouvement sinon active le 2nd timer, pour avancer d'une case (s'il a fait un virage)
 		then
 			timer.period[0] = 0
 			timer.period[1] = w # timer servant à faire attendre le programme pour qu'il n'exécute pas tout de suite le "if Mode == 0" et n'exécute pas tout en même temps )
@@ -89,40 +122,38 @@ onevent timer0
 			motor.left.target = mf
 			motor.right.target = mf
 		end
-	end
-	
-	if  Mode == 2 then
-	
-		if turn == 0  # si le flag pour tourner (turn) est nul , il arrête le mouvement sinon active le 2nd timer, pour avancer d'une case 
+		
+	elseif Mode == 2 #COMMENTAURE SUR MODE 2 A FAIRE + COMMENT TVCOMMANDE
+	then
+		i = 0
+		if turn == 0
 		then
 			timer.period[0] = 0
-			timer.period[1] = 0 # timer servant à faire attendre le programme pour qu'il n'exécute pas tout de suite le "if Mode == 0" et n'exécute pas tout en même temps )
+			timer.period[1] = 0 
 			motor.left.target = 0
 			motor.right.target = 0
-		 #incrémente de 1, pour la prochaine "itération" du timer0
 		
-		elseif turn == 1 # S'il a tourné, avance d'une case
+		elseif turn == 1
 		then
 			timer.period[0] = 0
 			timer.period[1]= a
 			motor.left.target = mf
 			motor.right.target = mf
 		end
-	end	
+		
+	end
 	
 #*____________
 Partie test valeurs tableau *#
 	
-	if Mode == 0 #Thymio lit les valeurs (il est en deuxième pour éviter que il saute des valeurs lorsque il reprend la boucle)
+	if Mode == 0 #(Mode par défaut) Thymio lit les valeurs (partie de code mise à la fin pour éviter qu'il saute des valeurs lorsque il reprend la boucle)
 	then
-		if c[i] == 0
+	
+		#*if c[i] == 5 #
 		then 
-			i = 0
-			Mode = 2
-			x=1
+			Mode = 2 #MOde 2 sert pour dernière val du tableau incrémente pas arrête timer et sert aussi a pouvoir lancer l'execution du tableau 2 fois en remettant i=0 etc...
 			return
-
-		end
+		end*#
 			
 		if c[i] == 1 
 		then
@@ -148,6 +179,11 @@ Partie test valeurs tableau *#
 		then
 			callsub back
 			Mode = 1
+			
+		elseif c[i] == 5 
+		then
+			Mode = 2
+			return	
 			
 		else
  			return # si la i-ième case du tableau contient autre chose que 1,2,3 ou 4 arrête d'incrémenter, sort de la "boucle" et arrête le test
