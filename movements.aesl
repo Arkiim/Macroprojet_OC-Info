@@ -32,22 +32,39 @@ var c[] = [1,1,4,4,0] #tableau d'instruction de mouvement. Tout droit: c[i] = 1,
 var i # var définissant la position de l'i-ème élément du tableau C
 
 var Mode = 0 #Variable définissant le "mode d'interprétation" du code pour thymio. Si Mode = 0 Thymio lira les valeurs et si Mode = 1 Thymio initiera les timers pour s'occuper du mouvement. avec entre les 2 des temps d'arrêt pour laisser le temps a Thymio de bouger avant de lire la prochaine valeur du tableau.
+
+var nul = 0
+
+
+var j = (i + 1) # var permettant d'arrêter timer0 une fois arrivé a la dernière valeur du tableau(avant le 0)
+
 i = 0
 #*____________
-Partie test telecommande *#
-  rc5.command = 53
-  
+Partie test telecommande *#  
 onevent rc5
-if rc5.command==53 then	
+
+if rc5.command==53 #then
+	
+	#if nul == 0 
+	then
+	Mode = 0
 	timer.period[0] = a
+	rc5.command = 0
+	
+	#*elseif nul == 1
+	then
+	call leds.top(32, 12, 20)
+	timer.period[0] = a
+	rc5.command = 0
+	end*#
 end
-timer0 
+#*timer0 
 onevent timer0 
 
 if  rc5 command = fleches  then
 	c[i]= fleche appuyé
 end
-i++
+i++*#
 #*____________
 Partie Timers *#
 
@@ -73,12 +90,39 @@ onevent timer0
 			motor.right.target = mf
 		end
 	end
+	
+	if  Mode == 2 then
+	
+		if turn == 0  # si le flag pour tourner (turn) est nul , il arrête le mouvement sinon active le 2nd timer, pour avancer d'une case 
+		then
+			timer.period[0] = 0
+			timer.period[1] = 0 # timer servant à faire attendre le programme pour qu'il n'exécute pas tout de suite le "if Mode == 0" et n'exécute pas tout en même temps )
+			motor.left.target = 0
+			motor.right.target = 0
+			i++ #incrémente de 1, pour la prochaine "itération" du timer0
+		
+		elseif turn == 1 # S'il a tourné, avance d'une case
+		then
+			timer.period[0] = 0
+			timer.period[1]= a
+			motor.left.target = mf
+			motor.right.target = mf
+		end
+	end	
+	
 #*____________
 Partie test valeurs tableau *#
 	
 	if Mode == 0 #Thymio lit les valeurs (il est en deuxième pour éviter que il saute des valeurs lorsque il reprend la boucle)
 	then
-	
+		if c[i] == 0 
+		then 
+			i = 0
+			Mode = 2
+			return
+
+		end
+			
 		if c[i] == 1 
 		then
 			callsub moove #fonction mettant la periode de Timer0 a 1 seconde et faisant avancer Thymio pendant toute la période de Timer0 
@@ -105,20 +149,27 @@ Partie test valeurs tableau *#
 			Mode = 1
 			
 		else
-			return # si la i-ième case du tableau contient autre chose que 1,2,3 ou 4 arrête d'incrémenter, sort de la "boucle" et arrête le test
+ 			return # si la i-ième case du tableau contient autre chose que 1,2,3 ou 4 arrête d'incrémenter, sort de la "boucle" et arrête le test
 		end	
 	
 	end
 
 onevent timer1 #arrête timer0 et timer1 et remet le Mode = 0
-
+if Mode == 2 then
+	timer.period[1] = 0
+	timer.period[0] = 0 # Redemarre la boucle
+	motor.left.target = 0
+	motor.right.target = 0
+	turn = 0
+	Mode = 0
+else
 	timer.period[1] = 0
 	timer.period[0] = a # Redemarre la boucle
 	motor.left.target = 0
 	motor.right.target = 0
 	turn = 0
 	Mode = 0
-
+end
 #*_____
 Partie mouvement*#
 
