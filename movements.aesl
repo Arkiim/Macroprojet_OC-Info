@@ -27,14 +27,14 @@ var mt = 200 # vitesse lorsque le thymio tourne (Moove Turn)
 
 var turn = 0 # variable "flag" pour pouvoir avancer après un virage
 
-var c[] = [1,1,4,4,0] #tableau d'instruction de mouvement. Tout droit: c[i] = 1, droite: c[i]=2,  gauche: c[i]=3, reculer c[i] = 4.
+var c[] = [1,4,0] #tableau d'instruction de mouvement. Tout droit: c[i] = 1, droite: c[i]=2,  gauche: c[i]=3, reculer c[i] = 4.
 
 var i # var définissant la position de l'i-ème élément du tableau C
 
 var Mode = 0 #Variable définissant le "mode d'interprétation" du code pour thymio. Si Mode = 0 Thymio lira les valeurs et si Mode = 1 Thymio initiera les timers pour s'occuper du mouvement. avec entre les 2 des temps d'arrêt pour laisser le temps a Thymio de bouger avant de lire la prochaine valeur du tableau.
 
 var nul = 0
-
+var x = 0
 
 var j = (i + 1) # var permettant d'arrêter timer0 une fois arrivé a la dernière valeur du tableau(avant le 0)
 
@@ -99,7 +99,7 @@ onevent timer0
 			timer.period[1] = 0 # timer servant à faire attendre le programme pour qu'il n'exécute pas tout de suite le "if Mode == 0" et n'exécute pas tout en même temps )
 			motor.left.target = 0
 			motor.right.target = 0
-			i++ #incrémente de 1, pour la prochaine "itération" du timer0
+		 #incrémente de 1, pour la prochaine "itération" du timer0
 		
 		elseif turn == 1 # S'il a tourné, avance d'une case
 		then
@@ -115,10 +115,11 @@ Partie test valeurs tableau *#
 	
 	if Mode == 0 #Thymio lit les valeurs (il est en deuxième pour éviter que il saute des valeurs lorsque il reprend la boucle)
 	then
-		if c[i] == 0 
+		if c[i] == 0
 		then 
 			i = 0
 			Mode = 2
+			x=1
 			return
 
 		end
