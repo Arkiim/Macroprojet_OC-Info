@@ -2,7 +2,7 @@ body {
       margin: 0;
       padding: 0;
       font-family: "Montserrat", "Helvetica";
-      transition:0.4s; /* ajoute une "animation" lorsque le body "disparait pour laisser place à la barre de navigation*/
+      transition:0.4s; /* ajoute une "animation" lorsque le body "disparait" pour laisser place à la "barre" de navigation (le menu)*/
       background-color: hsl(0, 0%, 90%); /* couleur (gris clair) du footer comme expliqué dans index.html */
 }
 #foo {
@@ -61,7 +61,7 @@ hr {
 /* Navbars */
 
 .Navbar {
-      height: 100%; /* définit la barre de navigation sur la gauche */
+      height: 100%; /* définit le menu de navigation sur la gauche */
       width: 0; /* largeur intial de 0 pour qu'on ne la voit que lorsqu'on appelle la fonction "show()"*/
       position: fixed;
       z-index: 1; /* apparait par dessus le reste */
@@ -69,11 +69,12 @@ hr {
       background-color: black;
       overflow-x: hidden; /* cache tout texte qui dépasse de la zone noire */
       padding-top: 60px;
-      transition: 0.6s; /* rajoute une "animation" en ralentissant la barre navigation pour qu'elle s'affiche en 0.6seconde */
+      transition: 0.6s; /* rajoute une "animation" en ralentissant le menu navigation pour qu'il s'affiche en 0.6seconde */
 }
 
 .Navbar a, .Navbar span, #button{
-      padding: 7% 20%; /* stylise les éléments dans la barre de navigation */
+      padding: 7% 20%; /* stylise les éléments dans le
+ menu de navigation */
       padding-right: 10%;
       text-decoration: none; /* enlève la mise en forme classique des liens (soulignements etc...)*/
       font-size: 28px;
@@ -99,7 +100,7 @@ hr {
       background-color: hsl(0, 0%, 12%) !important; /* change la couleur de "l'onglet", du lien de la page où l'utilisateur se trouve, peu importe de si son curseur est sur le lien ou non*/
 }
 .flexnav {
-      display: flex;  /* met l'icone de la barre de navigation, le bouton, et l'élément hr sur la même ligne*/
+      display: flex;  /* met l'icône du menu de navigation, le bouton, et les élément hrs sur la même ligne*/
 }
 #icon {
       overflow: hidden;
@@ -112,26 +113,26 @@ hr {
       padding: 5px 10px;
       margin: 5px;
       font-size: 35px;
-      flex: 0.8; /* réduit la largeur du bouton à 0.8 fois la largeur de base du div contenant les hr */
+      flex: 0.8; /* réduit la largeur du bouton à 0.8 fois la largeur de base du div contenant les hrs */
       transition: 0.6s;
 }
 .linenav{
-      flex: 32; /* augmente la largeur du div contenant les hr à 32 fois la largeur de base du bouton */
+      flex: 32; /* augmente la largeur du div contenant les hrs à 32 fois la largeur de base du bouton */
       margin: auto 3px;
       margin-right: 40px;
       overflow: visible;
 }
 .linenav hr{
-      margin-top: 0; /* rapproche les lignes des 2 hr en enlevant les espaces entre les 2 */
+      margin-top: 0; /* rapproche les des 2 hrs en enlevant les espaces entre les 2 */
       margin-bottom: 0;    
 }
-.sticky { /* classe qui sera mise par javascript quand l'utilisateur scroll pour garder l'icone du menu en haut de la page */
+.sticky { /* classe qui sera mise par javascript quand l'utilisateur scroll pour garder l'icône du menu en haut de la page */
       position: fixed;
       top: 0;
       width: 100%;
 }
 
-.sticky + .content { /* ajout d'un espace pour que l'icone du menu cache le moins de texte possible */
+.sticky + .content { /* ajout d'un espace pour que l'icône du menu cache le moins de texte possible */
       margin-top: 102px;
 }
 /* Fin Partie Navbars */
@@ -215,3 +216,18 @@ text{ /* text "départ" et "sortie" */
 /*Fin Partie SVG*/
 
 /* Fin Partie Content */
+
+/* Partie annexe */
+
+.glos {
+      list-style-type: none;
+      padding: 0;
+}
+.glos li {
+      display: inline-block;
+      padding: 5px;
+      font-size: 18px;
+      width: 30%;
+      margin: 0 auto;
+}
+/* Fin partie annexe */
