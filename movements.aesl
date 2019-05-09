@@ -3,9 +3,11 @@
 
 
 <!--list of global events-->
+<event size="5" name="motors"/>
 
 
 <!--list of constants-->
+<constant value="100" name="SIGMA"/>
 
 
 <!--show keywords state-->
@@ -14,6 +16,27 @@
 
 <!--node thymio-II-->
 <node nodeId="34294" name="thymio-II">#Partie Variables
+
+var speed
+#var target_speed
+var left
+var right
+# mean and vari(ance) calculation vars
+var mini
+var maxi
+var mean
+var vari
+# actual value and n(ormalized)dev(iation)
+var p1
+var ndev
+# pi controller vars
+var ireg
+var preg
+var pcoeff
+var icoeff
+
+
+
 
 var a = 1000 # valeur pour timer principal qui sert de boucle et aussi définit pendant combien de temps thymio avance ou recule
 
@@ -38,7 +61,17 @@ var rc # var permettant de stocker la valeur de "rc5.command" pour pouvoir la co
 var Mode = 10 #Variable définissant le "mode d'interprétation" du code pour thymio. Si Mode = 0 Thymio lira les valeurs et si Mode = 1 Thymio initiera les timers pour s'occuper du mouvement. avec entre les 2 des temps d'arrêt pour laisser le temps a Thymio de bouger avant de lire la prochaine valeur du tableau.
 
 timer.period[0] = 50
-
+#onevent startup
+  speed=150
+  #
+  mini=1024
+  maxi=0
+  mean=512
+  vari=512
+  #
+  pcoeff=60
+  icoeff=33
+  ireg=0
 #*____________
 Partie telecommande *#  
 onevent rc5
@@ -210,18 +243,80 @@ end
 #*_____
 Partie mouvement*#
 
+
+sub statistics
+  call math.max(maxi,maxi,p1)			  # find max p1 -> maxi
+  call math.min(mini,mini,p1)             # find min p1 -> mini
+  if maxi-mini>400 then
+  	call math.muldiv(vari,45,maxi-mini,100) 
+    mean=(mini+maxi)/2
+  end
+
+
+sub set_motor
+  emit motors [-100,100,0,ireg,ndev]
+  motor.left.target=left
+  motor.right.target=right
+
+
+
+
 sub moove # fait avancer le thymio d'une case
 	timer.period[0]= a
 	motor.left.target = mf
 	motor.right.target = mf
 	turn = 0
+	
+	#*Partie suit ligne noir *#
+	onevent prox
+	p1=prox.ground.delta[1]                
+  callsub statistics
+  call math.muldiv(ndev,SIGMA,p1-mean,vari)
+  if abs(ndev)&lt;2*SIGMA then				   # Am I still on the edge?
+    call leds.top(0,0,0)
+    # pi controller
+    preg=(pcoeff*ndev)/100
+    ireg+=(icoeff*preg)/100
+    # calc speed of motors 	
+    left=speed+(preg+ireg)
+    right=speed-(preg+ireg)
+  else                                    # I'm outside, help!
+    call leds.top(32,0,0)
+    ireg=0
+    left=ndev
+    right=-ndev
+  end
+  #pc+=1
+  callsub set_motor
+	#fin
 
 sub tright # fait tourner le thymio a droite puis "active" turn
 	timer.period[0] = t
 	motor.left.target = mt
 	motor.right.target = 0
 	turn = 1	
-	
+
+
+	p1=prox.ground.delta[1]                
+  callsub statistics
+  call math.muldiv(ndev,SIGMA,p1-mean,vari)
+  if abs(ndev)&lt;2*SIGMA then				   # Am I still on the edge?
+    call leds.top(0,0,0)
+    # pi controller
+    preg=(pcoeff*ndev)/100
+    ireg+=(icoeff*preg)/100
+    # calc speed of motors 	
+    left=speed+(preg+ireg)
+    right=speed-(preg+ireg)
+  else                                    # I'm outside, help!
+    call leds.top(32,0,0)
+    ireg=0
+    left=ndev
+    right=-ndev
+  end
+  #pc+=1
+  callsub set_motor
+	#fin
 	
 sub tleft # fait tourner le thymio a gauche
 	timer.period[0] = t
@@ -229,12 +324,58 @@ sub tleft # fait tourner le thymio a gauche
 	motor.right.target = mt
 	turn = 1
 	
+
+	p1=prox.ground.delta[1]                
+  callsub statistics
+  call math.muldiv(ndev,SIGMA,p1-mean,vari)
+  if abs(ndev)&lt;2*SIGMA then				   # Am I still on the edge?
+    call leds.top(0,0,0)
+    # pi controller
+    preg=(pcoeff*ndev)/100
+    ireg+=(icoeff*preg)/100
+    # calc speed of motors 	
+    left=speed+(preg+ireg)
+    right=speed-(preg+ireg)
+  else                                    # I'm outside, help!
+    call leds.top(32,0,0)
+    ireg=0
+    left=ndev
+    right=-ndev
+  end
+  #pc+=1
+  callsub set_motor
+	#fin
+	
+	
+	
 sub back #fait reculer le thymio
 	timer.period[0] = a
 	motor.left.target = -mt
 	motor.right.target = -mt
 	turn = 0		
 
+
+
+	p1=prox.ground.delta[1]                
+  callsub statistics
+  call math.muldiv(ndev,SIGMA,p1-mean,vari)
+  if abs(ndev)&lt;2*SIGMA then				   # Am I still on the edge?
+    call leds.top(0,0,0)
+    # pi controller
+    preg=(pcoeff*ndev)/100
+    ireg+=(icoeff*preg)/100
+    # calc speed of motors 	
+    left=speed+(preg+ireg)
+    right=speed-(preg+ireg)
+  else                                    # I'm outside, help!
+    call leds.top(32,0,0)
+    ireg=0
+    left=ndev
+    right=-ndev
+  end
+  #pc+=1
+  callsub set_motor
+	#fin
 </node>
 
 
