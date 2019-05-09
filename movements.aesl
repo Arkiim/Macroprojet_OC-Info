@@ -14,7 +14,7 @@
 
 <!--node thymio-II-->
 <node nodeId="34294" name="thymio-II">#Partie Variables
-#griund reflect 0 60-70 1 36-43 idem ground delta  +- 5-10
+#ground reflect 0 60-70 1 36-43 idem ground delta  +- 5-10
 
 
 var a = 1000 # valeur pour timer principal qui sert de boucle et aussi définit pendant combien de temps thymio avance ou recule
