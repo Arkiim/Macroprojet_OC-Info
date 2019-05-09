@@ -14,6 +14,8 @@
 
 <!--node thymio-II-->
 <node nodeId="34294" name="thymio-II">#Partie Variables
+#griund reflect 0 55 1 40 idem ground delta  +- 5-10
+
 
 var a = 1000 # valeur pour timer principal qui sert de boucle et aussi définit pendant combien de temps thymio avance ou recule
 
@@ -21,7 +23,7 @@ var t = 2300 # valeur pour timer où thymio tourne
 
 var w = 100 # valeur pour timer permettant de faire attendre entre plusieurs instructions consécutives
 
-var mf = 150 # vitesse lorsque le thymio avance (Moove Forward)
+var mf = 280 # vitesse lorsque le thymio avance (Moove Forward)
 
 var mt = 200 # vitesse lorsque le thymio tourne (Moove Turn)
 
@@ -209,23 +211,33 @@ else
 end
 #*_____
 Partie mouvement*#
-
+onevent prox
+	if  prox.ground.delta[0] > 500 and Mode == 1 # celui de gauche
+	then
+		motor.right.target= motor.right.speed -10
+	
+	end
+	if 	prox.ground.delta[1] > 500 and Mode == 1 #celui de droite
+	then
+		motor.left.target= motor.left.speed - 10
+	end
+	
 sub moove # fait avancer le thymio d'une case
 	timer.period[0]= a
-	motor.left.target = mf
+	motor.left.target = mf+15
 	motor.right.target = mf
 	turn = 0
 
 sub tright # fait tourner le thymio a droite puis "active" turn
-	timer.period[0] = t
+	timer.period[0] = t/2
 	motor.left.target = mt
-	motor.right.target = 0
+	motor.right.target = -mt
 	turn = 1	
 	
 	
 sub tleft # fait tourner le thymio a gauche
-	timer.period[0] = t
-	motor.left.target = 0
+	timer.period[0] = t/2
+	motor.left.target = -mt
 	motor.right.target = mt
 	turn = 1
 	
