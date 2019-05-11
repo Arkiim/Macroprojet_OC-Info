@@ -16,6 +16,7 @@
 <node nodeId="34294" name="thymio-II">#Partie Variables
 #ground reflect 0 60-70 1 36-43 idem ground delta  +- 5-10
 #Thymio fait environ 11cm si on fait 1 case = 2 thymio ca va faire cases bcp trop grandes => 1 mouvement tout droit fait 1/3 de feuille A4 (en longueur)
+#=>9.5cm
 
 
 var a = 1000 # valeur pour timer principal qui sert de boucle et aussi définit pendant combien de temps thymio avance ou recule
