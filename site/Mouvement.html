@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Mouvement - Macroprojet-NM/AF</title>	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="./Macroprojet.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,400i,400,400i,600,700,800,900|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+	<script src="Macroprojet.js"></script>
+</head>
+<body onload="init()">
+	<div id="foo">
+
+	<!-- menu de navigation de côté -->
+		<div id="switch" class="Navbar"> 
+			<span id="Button" onclick="hide()">X</span>
+			<a href="./index.html">Plan</a>
+			<a class="active" href="./Problematique.html">Problématique</a>
+			<a href="./Mouvement.html">Le mouvement</a>
+			<a href="./Telecommande.html">Télécommande IR</a>
+			<a href="#">Ligne de Vie</a>
+			<a href="./annexe.html">Annexe</a>
+		</div>
+		<div id="invisible">
+		
+			<!-- en tête -->
+			<header id="hidden" class="header">
+				<h1 >OC Info - MacroProjet : Thymio</h1>
+				<h2>Arsène Fragnière - Noah Munz</h2>
+			</header>
+			<div class="rad-grad-bottom">
+			</div>
+			<div id="icon" class="flexnav"> 
+				<span id="button" onclick="show()">&#9776;</span>
+				<div class="linenav">
+					<hr id="second"/><hr/>
+				</div>
+			</div>
+
+			<!-- contenu-->
+			<section class="content">
+
+				<h2>Programmer le mouvement :</h2>
+				
+				<p>L'idée initiale était de programmer un mouvement par case pour pouvoir se déplacer case par case dans le labyrinthe. Cependant, pour que Thymio puisse retenir toutes les valeurs avant d'y rentrer, il lui faut les enregistrer dans tableau. Tableau qui a une valeur associe un mouvement, mais tout ceci sera plus developpé dans la partie "Télécommande IR". Comme le but ici n'est pas d'utiliser la télécommande, un tableau avec des valeurs prédéfinies a été utilisé</p>
+				<p>Le tableau marche de la manière suivante : un 1, correspond à un déplacement d'une case tout droit; un 2, correspond à un virage à droite et une case tout droite; un 3, pareil mais à gauche; et finalement un 4, correspond à un déplacement d'une case en arrière </p>
+
+				<p>Pour que Tyhmio puisse lire les valeur du tableau une par une en ayant du temps pour effectuer chaque mouvement, il fallait trouver un moyen de mettre le programme "en pause" pendant que Thymio avance. Car un problème récurrent auparavant, était que Thymio lisait l'intégralité du tableau et n'effectuait que le mouvement de la dernière valeur du tableau.</p>
+				<p>Une boucle "while" a alors été ajouté où chaque incrémentation correspondant à une case du tableau. Le "while" a été utilisé en pensant que le programme aseba allait attendre que le Thymio ait fini son mouvement avant d'incrémenter la boucle et de passer au prochain test, mais il n'en était rien. Non seulement le programme n'attendais pas, mais il continuais également à effectuer des bouts de code qui n'avait rien avoir avec ce while. Ce qui ce finissait en atrocité du style : un tableau à 4 cases mais un test incrémenté 5 fois alors qu'il était censé s'arrêter à 4... </p>
+				<p>C'est pourquoi nous avons des utiliser des timers de différentes manières pour substituer au while ainsi que marquer un temps d'arrêt.</p>
+				<br/>
+				<p>En d'autres termes, la programmation du mouvement ainsi que de toutes les autres parties, reposent sur un principe de "Mode". En effet, la partie principale du code, le cœur, se constitue d'une boucle qui s'exécute différemment en fonction du mode. Pour mieux voir quel mode fait quoi, agis comment et à quel moment, des leds leur ont été associé. Led bleu clair : Mode 0, Led violet/bleu foncé : Mode 1 et pourpre/rose Mode 3. Le Mode 10 sera expliqué dans la partie télécommande.
+				</p>
+				<p>On pourrait en outre, le représenter sous la forme d'un pseudo "arbre généalogique".<br>
+				Le but, présentement, est d'utiliser les timers en tant que boucles. Lorsque l'on définit la période d'un timer <br/>(ex: Timer.period[0]=100), le programme attend la valeur défini en milisecondes, ici 100 milisecondes, puis va répéter l'intégralité du code à l'intérieur de de la déclaration d'évenement (ex: onenevent timer0), avec une fréquence de 0.1 Hz (chaque 100ms, 0.1s).</p>
+				<p>Comme dit précédemment, le code repose sur l'exécution d'une boucle : le teste du mode. "L'arborescance" du programme pourrait se représenter de la manière suivante les actions se réalisent de haut en bas et de gauche à droite :</p>
+				<p>{ Soit T0 et T1: la période des timers 0 et 1, Rl et Rr: respectivement Roue gauche (Rleft) et Roue droite (Rright) }</p>
+				
+				<!-- Arbre Généalogique Schéma explicatif -->
+				<ul class="arb">
+					<li class="li1">Évenement : Timer[0]</li>
+					<li class="li2">Mode ==	10 </li> <li class="li2">Mode == 0</li> <li class="li2">Mode == 1</li class="li2"> <li class="li2" id="lilast">Mode == 2</li>
+					<li class="li4">Crée un tableau de valeur, effectue le test de l'entrée rc5 pour remplir le tableau. </li>
+					<li class="li4">Effectue le test du tableau de valeurs : réinitialise T0 à 1s,(chronomètre le mouvement). Puis simultanément, met Thymio en mode 1 et accélère Rl et Rr (en fonction de la valeur du tableau) pendant T0 seconde.</li> 
+					<li class="li4">À la fin du mouvement, après qu'il ait bougé, Timer[0] se ré-enclenche en mode 1. En mode 1 Thymio stop 
+					Timer[0], enclenche le Timer[1] à T1 = 100ms et arrête Rl et Rr (stop Thymio).</li> 
+					<li class="li4" id="lilast">S'enclenche lors du test en mode 0 quand Thymio atteint la dernière valeur du tableau. S'occupe simplement de réinitialiser le tout.</li>
+					<li class="li1" id="hr">Évenement : Timer[1]</li>
+					<li class="li1">Mode == 1 (appelé par Timer[0] en mode 1) stop Timer[1] et ré-enclenche la boucle, (remet T0 = 1000).</li>
+				</ul>
+				<p>Le déplacement lors d'un virage est encore légèrement différent. Au lieu de, lors de l'événement Timer[0] en Mode 0, réinitialiser T0 à 1s, T0 est égal à 1.15s et la (Rl pour un virage gauche ou Rr pour un à droite) est acceléré à -200 tandis que l'autre est accéléré à 200.
+				</p> 
+				<p>Dernièrement, un flag appellé "turn" est activé (mis à 1) pour que timer[0] en Mode 1, au lieu d'enclencher Timer[1] à 100ms et de stopper Thymio, l'enclenche à 1s et le fait avancer tout droit pendant T1 seconde (soit 1 seconde). À ce moment là cest Timer[1] qui vient stopper le mouvement et même temps que le reste.</p>
+				<p>En version "schématisé" pour mieux se représenter. (A partire de Mode == 0)</p>
+				
+				<!-- 2nd Partie explicative en pseudo algorithmique -->
+				<ul class="first"><!-- les classes first, second etc... simulent une indentation -->
+					<li class="onevent">Onevent Timer[0]</li><!-- classe Onevent rajoute un padding en dessous de l'élément de liste -->
+					<li>| If Mode == 0
+						<ul class="second">
+							<li>| test du tableau des valeurs (virage à gauche)</li>
+							<li>
+								<ul class="third">
+									<li>| T0 = 1150</li>
+									<li>| Mode = 1</li>
+									<li>| Rl = -200 </li>
+									<li>| Rr = 200</li>
+									<li>| turn = 1</li>
+									<li>| i++</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="onevent">Onvevent Timer[0]</li>
+					<li>| Elseif Mode == 1
+						<ul class="second">
+							<li>
+								| Elseif turn == 1
+								<ul class="third">
+									<li>| T0 = 0</li>
+									<li>| T1 = 1000</li>
+									<li>| Rl = 297</li>
+									<li>| Rr = 297</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="onevent">Onevent Timer[1]</li>
+					<li>| if Mode == 1
+						<ul class="second">
+							<li>| T1 = 0</li>
+							<li>| T0 = 1000</li>
+							<li>| Rl = 0</li>
+							<li>| Rr = 0</li>
+							<li>| turn = 0</li>
+							<li>| Mode = 0</li>
+						</ul>
+					</li>
+					<li class="onevent">Onevent Timer[0] etc...</li>
+				</ul>
+				<p>Il y a bien sûr d'autres fonctionnalités mais qui ne seront pas abordés dans cette partie.</p>
+			</section>
+
+			<!--  bas de page -->
+			<footer class="footer footer1">
+				<hr/><hr/>
+			</footer>
+		</div>
+	</div>
+</body>
+</html>

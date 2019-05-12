@@ -9,7 +9,7 @@ body {
       background-color: white; /* permet de rendre le reste du site blanc au lieu de la couleur du footer */
 }
 
-/* Partie Headers */
+/* Partie Headers-Footer */
 
 .header h1, .header h2 {
       margin: 0.7em 0.4em 0 0.4em;
@@ -48,50 +48,51 @@ hr {
 .footer {
       margin:0;
       padding:0;
-      background-color: hsl(0, 0%, 90%);
-      height: 120px;
+      background-color: hsl(0, 0%, 90%); /*met la couleur de fond du pied de page en gris*/
 }
 .footer hr {
       border: 1px inset hsl(0, 0%, 95%);
       margin: 0; /* permet de coller les 2 hr*/
 }
-
-/* Fin Partie Header */
+.footer1{
+      margin: 5% 0; 
+}
+/* Fin Partie Header-Footer*/
 
 /* Navbars */
 
 .Navbar {
-      height: 100%; /* définit le menu de navigation sur la gauche */
+      height: 99%; /* définit le menu de navigation sur la gauche */
       width: 0; /* largeur intial de 0 pour qu'on ne la voit que lorsqu'on appelle la fonction "show()"*/
       position: fixed;
       z-index: 1; /* apparait par dessus le reste */
       top: 0; /* est collé au haut de la page */
       background-color: black;
-      overflow-x: hidden; /* cache tout texte qui dépasse de la zone noire */
+      overflow: hidden; /* cache tout texte qui dépasse de la zone noire */
       padding-top: 60px;
       transition: 0.6s; /* rajoute une "animation" en ralentissant le menu navigation pour qu'il s'affiche en 0.6seconde */
 }
 
 .Navbar a, .Navbar span, #button{
-      padding: 7% 20%; /* stylise les éléments dans le
- menu de navigation */
+      padding: 7% 20%; /* stylise les éléments dans le menu de navigation */
       padding-right: 10%;
       text-decoration: none; /* enlève la mise en forme classique des liens (soulignements etc...)*/
       font-size: 28px;
       color: white;
-      display: block; /* fait en sorte que chaque lien prenne toute la largeur de la ligne et se mette l'un au dessus de l'autre*/ 
-      transition: 0.3s; /* ralentit l'effet du "a:hover" pour qu'il prenne 0.3second*/
-      cursor: pointer; /* change le type de curseur lorsque l'on "hover" les liens*/
+      display: block; /* fait en sorte que chaque onglet prenne toute la largeur de la ligne et qu'ils se mettent entre eux l'un au dessus de l'autre*/ 
+      transition: 0s; /* ralentit l'effet du "a:hover" pour qu'il prenne 0.3seconde*/
+      cursor: pointer; /* change le type de curseur lorsque l'on survol les liens*/
       top: 0;
 }
 .Navbar a{
       border-bottom: 1px solid hsl(0, 0%, 18%); /* ajoute une séparation grise foncée entre les parties */
 }
 .Navbar span{
-      position: absolute; /* permet de mettre la croix en haut en ignorant le padding-top de 60px*/
+      position: absolute; /* permet de mettre la croix du menu en haut en ignorant le padding-top de 60px*/
       right: 8%;  /*décale la croix*/
       padding: 12px 20px;
 }
+
 .Navbar a:hover, .Navbar span:hover {
       background-color: hsl(0, 0%, 8%); /*change la couleur de fond lorsque le curseur se déplace sur l'élément*/
       color: white;
@@ -132,13 +133,13 @@ hr {
       width: 100%;
 }
 
-.sticky + .content { /* ajout d'un espace pour que l'icône du menu cache le moins de texte possible */
+.sticky + .content, .sticky + .content1 { /* ajout d'un espace pour que l'icône du menu cache le moins de texte possible */
       margin-top: 102px;
 }
 /* Fin Partie Navbars */
 
 /* Partie Content */
-h1, h2, h3 {
+h1, h2, h3 { /* stylise tous les titres à l'intérieur du contenu de la balise Section */
       font-family: "Open Sans", "Arial";
 }
 .content {
@@ -149,6 +150,7 @@ h1, h2, h3 {
       box-shadow: 1px 1px 10px black;
       padding: 20px 30px;
 }
+
 .content h1, .content h2 { /*stylise tous les titres h1 et h2 à l'intérieur de la section qui a comme classe "content" */
       font-weight: 300;
       margin:0;
@@ -174,6 +176,7 @@ a:hover{
 .plan li {
       margin: 13px 25px;
  }
+
  /* Partie SVG */
 .center-svg { 
       width: 75%; /* définit une largeur et une hauteur pour centrer le div avec margin: 0 auto;  */
@@ -193,7 +196,7 @@ a:hover{
       fill: none;
 }
 .quadrillage {
-      stroke: grey;
+      stroke: grey; /* définit les cases */
 }
 .center-svg p {
       width: 14%;
@@ -213,21 +216,111 @@ text{ /* text "départ" et "sortie" */
 .answer path{
       margin-top: 20px;
 }
+
 /*Fin Partie SVG*/
 
+/* Content Partie Mouvement */
+ ul{
+      padding-left: 0;
+ }
+.arb {
+      width: 100%; /* spécifie une largeur pour pouvoir centrer en utilisant "auto" comme marge */
+      display: flex; /* aligne les éléments de listes */
+      justify-content: space-between; /* écarte les éléments de listes */
+      margin: 20px auto;
+      flex-wrap: wrap; /* si les éléments de listes dépasse du conteneur parent ils se rabattrons sur la ligne d'en bas*/
+
+} 
+.arb li { /* stylise les listes et éléments de liste du premier "schéma" explicatif */
+      width: 100% /* spécifie une largeur pour pouvoir centrer en utilisant "auto" comme marge */
+      margin: 25px 0;
+      list-style-type: none; /* enlève les points devant chaque élément de liste */
+      flex-wrap: wrap;
+      font-size: 16px;
+}
+.li1 { /* stylise les éléments pour que li1 prenne toute la largeur, li2 permette de mettre 4 "blocs de texte" par ligne idem pour li4 */
+      width: 100%;
+      text-align: center; /*centre les éléments de liste */
+      margin-bottom: 15px;
+}
+.li2{
+      text-align: center; 
+      width: 24.9%;
+      margin: 18px 0;
+}
+.li4 {
+      width: 24%;
+      text-align: center;
+      margin: 18px 0;
+      border-right: 1px solid purple;
+      padding: 0 5.3px;      
+}
+#lilast{
+      border:none; /* enlève la bordure pour les blocs de textes qui sont aux extrémités de la page */
+}
+.arb #hr{ /* stylise l'espace qui sépare les deux onevents*/
+     padding: 10px;
+     border-top: 1px solid lightgrey;
+}
+
+.first{
+      padding: 15px 55px; /* first et autres classes => expliqués dans l'html */
+      margin: 0;
+      list-style-type: none;
+      padding-bottom: 0; 
+}
+.second, .third{
+      list-style-type: inherit;
+}
+.second {
+      padding: 15px 40px;
+}
+.third {
+      padding: 15px 40px;
+}
+.onevent {
+      padding-bottom: 15px;
+}
 /* Fin Partie Content */
+
 
 /* Partie annexe */
 
 .glos {
       list-style-type: none;
       padding: 0;
+      width: 100%;
+      margin: 0 auto;
 }
 .glos li {
       display: inline-block;
       padding: 5px;
       font-size: 18px;
-      width: 30%;
+      width: 31%;
       margin: 0 auto;
+}
+.img {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin: 30px auto;
+}
+.img img {
+      width: 30%;
+      border: solid 1px black;
+      height: 350px;
+      width: 550px;
+      text-align: center;
+      margin: 0px auto;
+      margin-bottom: 20px;
+}
+.img1{
+      border-color: teal !important;
+      border-width: 2px;
+}
+.anx{
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
 }
 /* Fin partie annexe */
