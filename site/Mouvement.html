@@ -56,13 +56,23 @@
 				
 				<!-- Arbre Généalogique Schéma explicatif -->
 				<ul class="arb">
+					<!-- ligne du haut -->
 					<li class="li1">Évenement : Timer[0]</li>
-					<li class="li2">Mode ==	10 </li> <li class="li2">Mode == 0</li> <li class="li2">Mode == 1</li class="li2"> <li class="li2" id="lilast">Mode == 2</li>
+
+					<!-- ligne du milieu -->
+					<li class="li2">Mode ==	10 <div>Mode création tableau</div> </li> 
+					<li class="li2">Mode == 0 <div>Mode lecture tableau</div></li> 
+					<li class="li2">Mode == 1 <div>Mode mouvement selon tableau</div></li class="li2"> 
+					<li class="li2" id="lilast">Mode == 2 <div>Mode arrêt</div></li>
+					
+					<!-- ligne du bas -->
 					<li class="li4">Crée un tableau de valeur, effectue le test de l'entrée rc5 pour remplir le tableau. </li>
 					<li class="li4">Effectue le test du tableau de valeurs : réinitialise T0 à 1s,(chronomètre le mouvement). Puis simultanément, met Thymio en mode 1 et accélère Rl et Rr (en fonction de la valeur du tableau) pendant T0 seconde.</li> 
 					<li class="li4">À la fin du mouvement, après qu'il ait bougé, Timer[0] se ré-enclenche en mode 1. En mode 1 Thymio stop 
 					Timer[0], enclenche le Timer[1] à T1 = 100ms et arrête Rl et Rr (stop Thymio).</li> 
 					<li class="li4" id="lilast">S'enclenche lors du test en mode 0 quand Thymio atteint la dernière valeur du tableau. S'occupe simplement de réinitialiser le tout.</li>
+
+					<!-- ligne du haut -->
 					<li class="li1" id="hr">Évenement : Timer[1]</li>
 					<li class="li1">Mode == 1 (appelé par Timer[0] en mode 1) stop Timer[1] et ré-enclenche la boucle, (remet T0 = 1000).</li>
 				</ul>

@@ -246,7 +246,12 @@ text{ /* text "départ" et "sortie" */
 .li2{
       text-align: center; 
       width: 24.9%;
-      margin: 18px 0;
+      margin: 10px 0;
+}
+.arb div {
+      margin: 5px 0;
+      font-style: italic;
+      font-size: 15px;
 }
 .li4 {
       width: 24%;
