@@ -40,21 +40,20 @@
 
 				<h2>Programmer le mouvement</h2>
 				
-				<p>L'idée initiale était de programmer un mouvement par case pour pouvoir se déplacer case par case dans le labyrinthe. Cependant, pour que Thymio puisse retenir toutes les valeurs avant d'y rentrer, il lui faut les enregistrer dans tableau. Tableau qui a une valeur associe un mouvement, mais tout ceci sera plus developpé dans la partie "Télécommande IR". Comme le but ici n'est pas d'utiliser la télécommande, un tableau avec des valeurs prédéfinies a été utilisé</p>
-				<p>Le tableau marche de la manière suivante : un 1, correspond à un déplacement d'une case tout droit; un 2, correspond à un virage à droite et une case tout droite; un 3, pareil mais à gauche; et finalement un 4, correspond à un déplacement d'une case en arrière </p>
+				<p>L'idée initiale était de programmer un mouvement case par case pour contrôler le déplacement à l'intérieur du labyrinthe. Cependant, pour que Thymio puisse retenir toutes les valeurs avant d'y rentrer, il lui faut les enregistrer dans tableau. Tableau qui associe une valeur à chaque type de mouvement (avancer, reculer tourner à gauche et à droite), mais tout ceci sera plus developpé dans la partie "Télécommande IR". Comme le but ici n'est pas d'utiliser la télécommande, un tableau avec des valeurs prédéfinies a été utilisé</p>
+				<p>Le tableau marche de la manière suivante : un 1, correspond à un déplacement d'une case tout droit; un 2, correspond à un virage à droite et une case tout droite; un 3, pareil pour un virage à gauche; et finalement un 4, le déplacement d'une case vers  l'arrière.</p>
 
-				<p>Pour que Tyhmio puisse lire les valeur du tableau une par une en ayant du temps pour effectuer chaque mouvement, il fallait trouver un moyen de mettre le programme "en pause" pendant que Thymio avance. Car un problème récurrent auparavant, était que Thymio lisait l'intégralité du tableau et n'effectuait que le mouvement de la dernière valeur du tableau.</p>
-				<p>Une boucle "while" a alors été ajouté où chaque incrémentation correspondant à une case du tableau. Le "while" a été utilisé en pensant que le programme aseba allait attendre que le Thymio ait fini son mouvement avant d'incrémenter la boucle et de passer au prochain test, mais il n'en était rien. Non seulement le programme n'attendais pas, mais il continuais également à effectuer des bouts de code qui n'avait rien avoir avec ce while. Ce qui ce finissait en atrocité du style : un tableau à 4 cases mais un test incrémenté 5 fois alors qu'il était censé s'arrêter à 4... </p>
-				<p>C'est pourquoi nous avons des utiliser des timers de différentes manières pour substituer au while ainsi que marquer un temps d'arrêt.</p>
+				<p>Pour que Thymio puisse lire les valeurs du tableau une par une en ayant du temps pour effectuer chaque mouvement, il fallu trouver un moyen de mettre le programme "en pause" pendant que Thymio avance. Car un problème récurrent auparavant, était que Thymio lisait l'intégralité du tableau et n'effectuait que le mouvement correspondant à la dernière valeur du tableau.</p>
+				<p>Une boucle "while" a alors été ajouté, chaque incrémentation correspondant à une case du tableau. Le "while" a été utilisé en pensant que le programme aseba allait attendre que le Thymio ait fini son mouvement avant d'incrémenter la boucle et de passer au prochain test, mais se ne fut pas le cas. Non seulement le programme n'attendais pas, mais il continuais également à effectuer des bouts de code qui n'avait rien avoir avec ce while. Ce qui ce résultait en des situations impossibles tel que : un tableau à 4 cases mais un test incrémenté 5 fois ne s'arrétant donc pas quand il le devait.</p>
+				<p>La méthode avec boucles "while" a donc été abandonnée et remplacée par un système de timers. Ces derniers substituant le rôle précédament occupé par les boucles et permettant au robot de marquer des pauses entre chaque mouvement.</p>
 				<br/>
-				<p>En d'autres termes, la programmation du mouvement ainsi que de toutes les autres parties, reposent sur un principe de "Mode". En effet, la partie principale du code, le cœur, se constitue d'une boucle qui s'exécute différemment en fonction du mode. Pour mieux voir quel mode fait quoi, agis comment et à quel moment, des leds leur ont été associé. Led bleu clair : Mode 0, Led violet/bleu foncé : Mode 1 et pourpre/rose Mode 3. Le Mode 10 sera expliqué dans la partie télécommande.
-				</p>
-				<p>On pourrait en outre, le représenter sous la forme d'un pseudo "arbre généalogique".<br>
-				Le but, présentement, est d'utiliser les timers en tant que boucles. Lorsque l'on définit la période d'un timer <br/>(ex: Timer.period[0]=100), le programme attend la valeur défini en milisecondes, ici 100 milisecondes, puis va répéter l'intégralité du code à l'intérieur de de la déclaration d'évenement (ex: onenevent timer0), avec une fréquence de 0.1 Hz (chaque 100ms, 0.1s).</p>
-				<p>Comme dit précédemment, le code repose sur l'exécution d'une boucle : le teste du mode. "L'arborescance" du programme pourrait se représenter de la manière suivante les actions se réalisent de haut en bas et de gauche à droite :</p>
-				<p>{ Soit T0 et T1: la période des timers 0 et 1, Rl et Rr: respectivement Roue gauche (Rleft) et Roue droite (Rright) }</p>
-				
-				<!-- Arbre Généalogique Schéma explicatif -->
+				<p>De plus, la programmation du mouvement ainsi que de toutes les autres parties, repose sur un principe de "Mode". En effet, la partie principale du code, le cœur, se constitue d'une boucle (sous forme de timer se répétant plus ou moins infiniment) qui s'exécute différemment en fonction du mode. Pour faciliter la compréhension et la visibilité des différents modes et de leur enchainement différentes couleures de leds leur ont été associé. Led bleu clair : Mode 0, Led violet/bleu foncé : Mode 1 et pourpre/rose Mode 3. Le Mode 10 sera expliqué plus précisement dans la partie télécommande.</p>
+				<p>	Le but, présentement, est donc d'utiliser les timers en tant que boucles. Lorsque l'on définit la période d'un timer (ex: Timer.period[0]=100), le programme attend la valeur défini en milisecondes et répéte l'intégralité du code à l'intérieur de de la déclaration d'évenement (ex: onenevent timer0), avec une fréquence de 0.1 Hz (chaque 100ms).</p>
+				<p>L'on peut représenter la logique algorythimique du programme par le tableau suivant :</p>
+                   <!-- changer classe en id !!! --> 
+				<p class="smaller">{ Soit T0 et T1: la période des timers 0 et 1, Rl et Rr: respectivement Roue gauche (Rleft) et Roue droite (Rright) }</p>
+
+					<!-- Arbre Généalogique Schéma explicatif -->
 				<ul class="arb">
 					<!-- ligne du haut -->
 					<li class="li1">Évenement : Timer[0]</li>
@@ -76,6 +75,9 @@
 					<li class="li1" id="hr">Évenement : Timer[1]</li>
 					<li class="li1">Mode == 1 (appelé par Timer[0] en mode 1) stop Timer[1] et ré-enclenche la boucle, (remet T0 = 1000).</li>
 				</ul>
+				
+				<p>Comme dit précédemment, le code repose sur l'exécution d'une boucle définie par les timers cette dernière ayant pour but le test du mode et l'application des consignes qui y sont assimilé.</p>
+				
 				<p>Le déplacement lors d'un virage est encore légèrement différent. Au lieu de, lors de l'événement Timer[0] en Mode 0, réinitialiser T0 à 1s, T0 est égal à 1.15s et la (Rl pour un virage gauche ou Rr pour un à droite) est acceléré à -200 tandis que l'autre est accéléré à 200.
 				</p> 
 				<p>Dernièrement, un flag appellé "turn" est activé (mis à 1) pour que timer[0] en Mode 1, au lieu d'enclencher Timer[1] à 100ms et de stopper Thymio, l'enclenche à 1s et le fait avancer tout droit pendant T1 seconde (soit 1 seconde). À ce moment là cest Timer[1] qui vient stopper le mouvement et même temps que le reste.</p>
