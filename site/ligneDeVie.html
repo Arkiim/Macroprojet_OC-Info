@@ -40,10 +40,81 @@
 
 				<h2>Ligne de Vie</h2>
 
-				<p>Comme dit dans la partie dédié
-					</p>
-			</section>
+				<p>
+					Un des défauts principaux du Thymio, réside dans le caractère quelque peu aléatoire de ses déplacements. En effet sa masse, ainsi que les différences de fabrication entre les deux moteurs, peuvent parfois résulter en une déviation du robot de sa trajectoire. Ce défaut, parfois mineur, est, dans le cas de notre optique de déplacement par case, extrêmement problématique. 
+				</p> 
+				<p>
+					En effet, étant donné que la distance parcourue par Thymio lors de chaque déplacement, est déjà définie de manière constante dans le programme; ainsi que le fait que l’entièreté des déplacements soient déterminés à l’avance par l’utilisateur, il est impossible au Thymio de s’adapter à ses changements involontaires de trajectoire.
+				</p>
 
+                <p>
+                	Comme dit dans la partie dédiée à la problématique, nous avons d’abord envisagé une procédure appelé « Module d’Urgence », avant de mettre en place celle présente sur le Thymio intitulée « Ligne de Vie », à laquelle cette partie est consacrée. Cette première procédure a malheureusement dû être abandonnée.
+                </p>
+                <p>
+                	 Elle consistait en la création d’un processus d’urgence, ne s’enclenchant que quand le robot entrait en contact avec les murs du labyrinthe. C’est à dire quand il avait totalement dévié de sa trajectoire initiale et programmée. Outre le souci matériel de la création d’un mur en 3D (LEGO) ou en 2D (lignes noires). C’était le concept même du module qui était impossible.
+                </p>
+                <p>
+                	  En effet, le Thymio, après être entré en collision avec le mur du labyrinthe, devait retourner au centre du chemin ainsi que de la case (en utilisant les capteurs de proximité) et permettre à l’utilisateur de reprogrammer une série de mouvement (comme au début). 
+                </p>
+                <p>
+                	  Le problème majeur de cette méthode, réside dans le fait que le Thymio n’a pas conscience de sa localisation. Les mouvements étant découpé en casses, il est donc impossible de déterminer où le robot va rentrer en contact avec le mur et quel déplacement il devra faire pour réussir à se remettre en place, c'est à dire, au début de la prochaine casse.
+                </p>
+                <p>
+                	   Ce module étant donc en total désaccord avec le principe de l’algorithme créé pour gérer la création et l’application des mouvements du robot et une deuxième procédure a été trouvée et mise en place.
+            	</p>
+
+                <p>
+                	Totalement opposé dans son concept, le processus  « Ligne de Vie » consiste en la mise en place d'un dispositif aiguillant les déplacements du Thymio de façon continue, lui permettant de ne jamais dévier de sa trajectoire et donc d'appliquer celle programmée sans encombre.
+                </p>
+                <p>
+                	 Le moyen le plus efficace et le plus simple d'assurer la justesse des déplacements du Thymio, s'est avérée être l’utilisation d’une ligne noire au centre des cases. Grâce à cette ligne, le robot peut, tout au long du parcours, réajuster son déplacement, ne jamais être bloqué et donc appliquer de manière précise les mouvements entrés par l’utilisateur.
+            	</p>
+
+                <p>
+                	Pour cela, une ligne noire a été ajoutée tout au long du parcours, même dans les chemins "faux" du labyrinthe (culs-de-sac). En effet, la « Ligne de Vie » n'ayant qu'un but d'aide auxiliaire à la trajectoire du Thymio, elle ne pouvait pas, uniquement par elle-même, l'amener à bonne destination. Le programme suivant a alors été ajouté au code des mouvements et de la télécommande du robot :
+                </p>
+
+                <!-- Partie explicative en pseudo algorithmique -->
+
+				<ul class="first"><!-- les classes first, second etc... simulent une indentation -->
+					<li class="onevent">Onevent Prox</li><!-- classe Onevent rajoute un padding en dessous de l'élément de liste -->
+					<li>|  if  prox.ground.delta[0] > 500 and Mode == 1
+						<ul class="second padd"> <!-- class padd enlève les espaces trop grand déjà défini -->
+							<li>|  Si le capteur de gauche capte du blanc et que le Mode est sur 1 (mode mouvement)</li>
+							<li>
+								<ul class="third">
+									<li>
+										| motor.right.target= motor.right.target - 15 
+										<div class="commentTL commentLV"><!-- classe pour les commentaires explicatifs de la partie ligne de vie -->
+											=> Diminue la vitesse de la roue opposée à la déviation, dans ce cas si la roue droite.
+											<br/>Le robot tourne alors et continue le mouvement prévu.</div>
+									</li>
+									<li>
+										| call leds.top(0,32,0) <div class="commentTL commentLV">Indicateur lumineux LED montrant que la correction de trajectoire est bien en cours d'exécution</div>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<p>Bien évidemment la logique et la même pour une déviation sur vers la droite.</p>
+                    <li>|  if prox.ground.delta[1] > 500 and Mode == 1
+						<ul class="second">
+							<li>
+								<ul class="third">
+									<li>| motor.left.target= motor.left.target - 15</li>
+									<li>| call leds.top(0,32,0)</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<p>
+					Ce code, pourtant simple, a permis au Thymio de ne jamais dévié de sa trajectoire. De plus étant sous la forme d'un évènement (onevent prox) il n'interférait pas avec le déroulement des mouvements préprogrammés dont le code était déjà écrit (Ce dernier étant présenté dans la partie 1 : Programmer le mouvement).
+				</p>
+				<p>
+					Bien plus simple et sobre que le « Module d’Urgence » premièrement envisagé, on peut donc conclure que la procédure « Ligne de Vie » et une réussite.
+				</p>
+			</section>
 
 			<!--  bas de page -->
 			<footer class="footer">

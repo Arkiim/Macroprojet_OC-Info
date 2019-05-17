@@ -35,24 +35,140 @@
 					<hr id="second"/><hr/>
 				</div>
 			</div>
+
 			<!-- contenu-->
 			<section class="content">
 
 				<h2>Télécommande IR</h2>
 				<p>
-					L'utilisation de la télécommande infrarouge avec le Thymio, permet d'utiliser toute la partie "RC5" de la librairie de fonctions et protocoles. Dans notre projet, elle a été utilisé dans toute la partie "création" du tableau de valeur (Mode 10).  
+					L'utilisation de la télécommande infrarouge avec le Thymio, permet d'utiliser toute la partie "RC5" de la librairie de fonctions et protocoles. Dans notre projet, elle a été utilisée dans toute la partie "création" du tableau de valeur (Mode 10).  
 				</p>
 				<p>
 					Le but était d'ajouter la "participation" de l'utilisateur et de le rendre plus actif, sous la forme d'un jeu.<br/> 
 					En effet, c'est lui qui doit se créer son propre chemin pour mener Thymio hors du labyrinthe et ce, en rentrant la bonne combinaison de touche sur la télécommande. 
 				</p>
 				<p>
-					La télécommande utilise deux principales fonctionnalitées : 
+					La télécommande utilise deux principales fonctionnalités : 
 					<ol>
-					<!-- classe onevent utilisé pour avoir un formattage déjà fait de la lihgne -->	<li class="onevent">2 ifs utilisés avec l'évemenent "onevent RC5" pour la partie "GO" et "STOP" </li>
+					<!-- classe onevent utilisé pour avoir un formattage déjà fait de la ligne -->	<li class="onevent">2 ifs utilisés avec l'évèmenent "onevent RC5" pour les deux boutons "GO" et "STOP" </li>
 						<li>Le Mode 10 dans le test du tableau avec Timer0</li>
 					</ol>
 				</p>
+				<p>
+					Le mode 10 fonctionne de la manière suivante : L'entrée de la télécommande (valeur rc5.command) est stockée  dans une variable (rc)  puis, en fonction de cette dernière valeur, un 1, 2, 3 ou 4 est assigné à la n-ième cellule du tableau.
+				</p>
+				<p> 
+					De plus, il marche de telle sorte que, tant qu'une nouvelle touche de la télécommande n'a pas été entrée, tant que la valeur rc5.command du Thymio ne diffère pas de celle précédemment stockée (variable rc), la variable "n" n'est pas incrémenté.
+				</p>
+				<p>
+					Pour garder la même logique algorithmique que dans la partie 1, l'on a représenté le mode 10 comme suit :
+				</p>
+				<!-- Arbre Généalogique Schéma explicatif du mode 0 -->
+				<ul class="first"> 
+					<li>
+						| if Mode == 10
+						<ul class="second TL">
+							
+							<li>
+								<div class="commentTL">( Touche de la télécommande appuyé )</div>
+								| stock la valeur associé (valeur RC5.command) dans rc
+							</li>
+							<li>
+								| clear la valeur de rc5.command
+							</li>
+							<li>
+								| éteint les leds qui vont être allumés par la suite
+							</li>
+							<li>
+								| si rc correspond au code rc5 de la flèche du haut
+								<ul class="third paddtop"> <!-- Paddtop sert à enlever les espaces du haut qui sont déjà défini et redondant -->
+									<li>| Met un 1 dans la n-ième case du tableau</li>
+								</ul>
+							</li>
+							<li>
+								| si rc correspond au code rc5 de la flèche de droite
+								<ul class="third paddtop">
+									<li>| Met un 2 dans la n-ième case du tableau</li>
+								</ul>
+							</li>
+							<li>
+								| si rc correspond au code rc5 de la flèche de gauche
+								<ul class="third paddtop">
+									<li>| Met un 3 dans la n-ième case du tableau</li>
+								</ul>
+							</li>
+							<li>
+								| si rc correspond au code rc5 de la flèche du bas
+								<ul class="third paddtop">
+									<li>| Met un 4 dans la n-ième case du tableau</li>
+								</ul>
+							</li>
+							<li>
+								| si rc correspond au code rc5 de la touche 5
+								<ul class="third paddtop">
+									<li>| Met un 5 dans la n-ième case du tableau</li>
+									<li>| Stop T0 <!-- utilise type de commentaire de la partie ligne de vie pour pouvoir styliser le div en dessous du texte de l'élément de liste --><div class="commentTL commentLV">Attend l'entrée de la touche "GO" qui, elle, va relancer Timer0</div></li>
+
+									<li>| Allume les leds en mode "prêt" (en blanc)</li>
+									<li>| Return (sors du test)</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>
+						| Si une nouvelle touche différente de rc a été entrée
+						<ul class="third paddtop">
+							<li>| incrément n</li>
+							<li>| allume les leds validant l'entrée de la valeur précédente</li>
+						</ul>
+					</li>
+				</ul>
+				<p>Les boutons GO et STOP marchent, quant à eux, de manière bien plus simple :</p>
+
+				<!-- Arbre Généalogique Schéma explicatif des bouton go -->
+				<ul class="first">
+					<li>
+						Si la valeur de rc5.command correspond au "code" de la touche "GO"
+						<ul class="second">
+							<li>
+								| Met le mode à 0
+							</li>
+							<li>
+								| Re-lance Timer0 <div class="commentTL commentLV"> Ce dernier avait été arrêté lors de la création du tableau lorsque la dernière valeur (un 5) a été entré</div>
+							</li>
+							<li>
+								| clear la valeur de rc5.command
+							</li>
+							<li>
+								| Éteint les leds pour pouvoir continuer avec le mode 0 et la lecture du tableau de valeur
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<p>
+					Pour le bouton stop :
+				</p>
+			<!-- Arbre Généalogique Schéma explicatif des bouton stop -->
+				<ul class="first">
+					<li>
+						Si la valeur de rc5.command correspond au "code" de la touche "STOP"
+						<ul class="second">
+							<li>
+								| Met le mode à 2
+								<ul class="third">
+									<div class="commentTL">Le mode 2 effectue les déclarations suivantes :</div>
+									<li>| Met les leds correspondant au mode 2 (en pourpre/rose)</li>
+									<li>| arrête les timers</li>
+									<li>| arrête les moteurs</li>
+									<li>| Remet le mode à 0 (pour pouvoir lancer le parcours une 2e fois)</li>
+									<li>| Remet turn à 0</li><br>
+									<div class="commentTL commentLV">Et tout ceci, peu importe le type de mouvement (virage ou non), ou le mode.</div>									
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<p>Ceci conclut dorénavant la partie 2 : Programmer la télécommande.</p>
 			</section>
 
 

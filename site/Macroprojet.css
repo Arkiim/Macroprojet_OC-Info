@@ -220,6 +220,19 @@ text{ /* text "départ" et "sortie" */
 /*Fin Partie SVG*/
 
 /* Content Partie Mouvement */
+ 
+ .smaller{ /* stylise les légendes des schémas algorithmiques */
+      font-size: 15px !important;
+      font-style: italic;
+      position: relative; /* permet l'utilisation de la propriété ci-dessous */
+      bottom: 8px; /* décale le texte de 8px depuis le bas (donc vers le haut)*/
+      z-index: -1; /* fait "recluer" l'élément, permet de le mettre "derrière" n'importe quelle autre éléments qui viendrait se superposer (ex: l'espace pris par l'icône et les 2 hrs) */
+ }
+
+.content span { /* toujours utile pour les légendes */
+      padding: 0 30px 30px 20px;
+}
+
  ul{
       padding-left: 0;
  }
@@ -248,7 +261,7 @@ text{ /* text "départ" et "sortie" */
       width: 24.9%;
       margin: 10px 0;
 }
-.arb div {
+.arb div { /* légende de titre des modes */
       margin: 5px 0;
       font-style: italic;
       font-size: 15px;
@@ -286,44 +299,69 @@ text{ /* text "départ" et "sortie" */
 .onevent {
       padding-bottom: 15px;
 }
+/* Content Partie Télécommande */
+
+.commentTL, .commandLV { 
+      padding-bottom: 5px;
+      color: darkblue;
+      font-weight: 500;
+      font-style: italic;
+}
+
+.TL li {
+      padding: 4px 0;
+}
+/* Content Partie Ligne de Vie */
+
+.commentLV, { 
+      padding: 3px 0 10px 0;
+}
+.paddtop{ /* enlève les espaces trop grand en haut*/
+      padding-top: 4px !important;
+}
+
+.padd{/* enlève les espaces trop grand en bas*/
+      padding-bottom: 0 !important;
+}
+
 /* Fin Partie Content */
 
 
 /* Partie annexe */
 
-.glos {
-      list-style-type: none;
+.glos {  /* stylise la liste principale sous les images */
+      list-style-type: none; /* enlève les petits rond au début de chaque élément de liste */
       padding: 0;
       width: 100%;
-      margin: 0 auto;
+      margin: 0 auto; /* centre */
 }
-.glos li {
-      display: inline-block;
+.glos li { /* stylise  les éléments de listes eux-mêmes */
+      display: inline-block; /* change le display pour qu'ils s'affichent alignés mais gardent une width et height modulable */
       padding: 5px;
       font-size: 18px;
       width: 31%;
       margin: 0 auto;
 }
-.img {
-      display: flex;
-      justify-content: space-between;
+.img { /* stylise les images*/
+      display: flex; /* font en sorte que les images apparaissent l'une à côté de l'autre */
+      justify-content: space-between; /* ajoute de l'espace entre elles */
       width: 100%;
       margin: 30px auto;
 }
-.img img {
+.img img { /* classe pour chaque image spécifiquement une aura une border noir, l'autre sera turquoise */
       width: 30%;
       border: solid 1px black;
-      height: 350px;
+      height: 350px; /* change aussi la taille pour que les deux aient la même */
       width: 550px;
-      text-align: center;
-      margin: 0px auto;
+      text-align: center; /* centre l'image */
+      margin: 0px auto; /* re-centre l'image au cas ou la propriété du dessus ne foncitonnerait pas */
       margin-bottom: 20px;
 }
 .img1{
-      border-color: teal !important;
+      border-color: teal !important; /* le "!important" sert à overwrite la couleur noir déjà défini dans la déclaration ci-dessus */
       border-width: 2px;
 }
-.anx{
+.anx{ /* stylise le div qui contient les listes */
       width: 100%;
       margin: 0 auto;
       text-align: center;
