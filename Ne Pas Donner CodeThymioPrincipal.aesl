@@ -15,6 +15,10 @@
 <!--node thymio-II-->
 <node nodeId="29653" name="thymio-II">#Partie Variables
 
+var LV1 # LV1 et LV2, variables qui permettent de compenser la perte de vitesse dû au réajustement
+
+var LV2
+
 var a = 1000 # valeur pour timer principal qui sert de boucle et aussi définit pendant combien de temps thymio avance ou recule
 
 var t = 1150 # valeur pour timer où thymio tourne
@@ -27,7 +31,7 @@ var mt = 200 # vitesse lorsque le thymio tourne (Moove Turn)
 
 var turn = 0 # variable "flag" pour pouvoir avancer après un virage
 
-var c[] = [0,0,0,0,0,0,0,0,0,0,0,0] #tableau d'instruction de mouvement. Tout droit: c[i] = 1, droite: c[i]=2,  gauche: c[i]=3, reculer c[i] = 4.
+var c[] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] #tableau d'instruction de mouvement. Tout droit: c[i] = 1, droite: c[i]=2,  gauche: c[i]=3, reculer c[i] = 4.
 
 var i = 0 # var définissant la position de l'i-ème élément du tableau C
 
@@ -36,6 +40,9 @@ var n = 0 # var (utilisé lors de la création du tableau, 2 vars différentes p
 var rc # var permettant de stocker la valeur de "rc5.command" pour pouvoir la comparer plus tard
 
 var Mode = 10 #Variable définissant le "mode d'interprétation" du code pour thymio. Si Mode = 0 Thymio lira les valeurs et si Mode = 1 Thymio initiera les timers "en mode" mouvement. avec entre chaques des temps d'arrêt pour laisser le temps a Thymio de bouger avant de lire la prochaine valeur du tableau. Si Mode = 10, il met les valeurs de la télécommande dans le tableau, et si Mode = 2, il effectue la dernière action et se stop
+
+LV1 = 0
+LV2 = 0
 
 timer.period[0] = 50 #Timer qui tourne tout le temps, vérifie le mode et applique la partie du code qui y correspond
 
@@ -221,13 +228,36 @@ onevent prox
 	
 	if  prox.ground.delta[0] > 500 and Mode == 1 # si capteur de gauche capte du blanc et que le Mode est sur 1
 	then
-		motor.right.target= motor.right.target - 15 #diminue la vitesse de la roue opposé => tourne légèrement
-		call leds.top(0,32,0)
+	
+		if LV1 == 0  #compense le réajustement en mettant +15 une fois et -15 l'autre
+		then
+			motor.right.target= motor.right.target - 15 #diminue la vitesse de la roue opposé => tourne légèrement
+			LV1 = 1
+			call leds.top(0,32,0)
+		elseif LV1 == 1 
+		then
+			motor.right.target= motor.right.target + 15 #diminue la vitesse de la roue opposé => tourne légèrement
+			LV1 = 0
+			call leds.top(0,32,0)
+		end
+			
 	end
+	
 	if 	prox.ground.delta[1] > 500 and Mode == 1 # idem avec capteur de droite
 	then
-		motor.left.target= motor.left.target - 15 #diminue la vitesse de la roue opposé => tourne légèrement
-		call leds.top(0,32,0)
+	
+		if LV2 == 0 #compense le réajustement en mettant +15 une fois et -15 l'autre
+		then
+			motor.left.target= motor.left.target - 15 #diminue la vitesse de la roue opposé => tourne légèrement
+			LV2 = 1
+			call leds.top(0,32,0)
+		elseif LV2 == 1 
+		then
+			motor.left.target= motor.left.target + 15 #diminue la vitesse de la roue opposé => tourne légèrement
+			LV2 = 0
+			call leds.top(0,32,0)
+		end
+		
 	end
 
 	
