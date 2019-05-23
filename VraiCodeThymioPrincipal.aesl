@@ -25,7 +25,7 @@ var t = 1150 # valeur pour timer où thymio tourne
 
 var w = 100 # valeur pour timer permettant de faire attendre entre plusieurs instructions consécutives
 
-var mf = 297 # vitesse lorsque le thymio avance (Moove Forward)
+var mf = 327 # vitesse lorsque le thymio avance (Moove Forward)
 
 var mt = 200 # vitesse lorsque le thymio tourne (Moove Turn)
 
@@ -229,15 +229,17 @@ onevent prox
 	if  prox.ground.delta[0] > 500 and Mode == 1 # si capteur de gauche capte du blanc et que le Mode est sur 1
 	then
 	
-		if LV1 == 0  #compense le réajustement en mettant +15 une fois et -15 l'autre
+		if LV1 == 0  #compense le réajustement en mettant +20 une fois et -20 l'autre
 		then
-			motor.right.target= motor.right.target - 15 #diminue la vitesse de la roue opposé => tourne légèrement
 			LV1 = 1
+			motor.right.target= motor.right.target - 16 #diminue la vitesse de la roue opposé => tourne légèrement
+			
 			call leds.top(0,32,0)
 		elseif LV1 == 1 
 		then
-			motor.right.target= motor.right.target + 15 #diminue la vitesse de la roue opposé => tourne légèrement
 			LV1 = 0
+			motor.left.target= motor.left.target + 16 #diminue la vitesse de la roue opposé => tourne légèrement
+			
 			call leds.top(0,32,0)
 		end
 			
@@ -248,12 +250,12 @@ onevent prox
 	
 		if LV2 == 0 #compense le réajustement en mettant +15 une fois et -15 l'autre
 		then
-			motor.left.target= motor.left.target - 15 #diminue la vitesse de la roue opposé => tourne légèrement
+			motor.left.target= motor.left.target - 16 #diminue la vitesse de la roue opposé => tourne légèrement
 			LV2 = 1
 			call leds.top(0,32,0)
 		elseif LV2 == 1 
 		then
-			motor.left.target= motor.left.target + 15 #diminue la vitesse de la roue opposé => tourne légèrement
+			motor.right.target= motor.right.target + 16 #diminue la vitesse de la roue opposé => tourne légèrement
 			LV2 = 0
 			call leds.top(0,32,0)
 		end
